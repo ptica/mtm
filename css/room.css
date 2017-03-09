@@ -1,0 +1,103 @@
+.rooms .room {
+    margin: 10px 0px;
+    border: 2px dashed #dbdbdb;
+    padding: 0px 20px 20px 15px;
+    position: relative;
+    cursor: pointer;
+}
+.rooms .room.selected {
+    border: 2px solid #2FBE2F;;
+}
+
+.rooms .room h2 {
+    margin-left: 35px;
+    font-size: 26px;
+}
+
+.rooms .room h2 .location {
+    font-size: 19px;
+    color: #cbcbcb;
+}
+
+.rooms .room input {
+    float:left;
+    margin-top: 12px;
+    zoom: 2;
+    -moz-transform: scale(2);
+}
+
+.rooms .room .price {
+    font-size: 25px;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    padding: 20px 7px 15px 7px;
+}
+.rooms .room .price .notice {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    color: #cdcdcd;
+    text-align: center;
+}
+
+.meals .none,
+.queries .none,
+.upsells .none,
+.rooms .none {
+    line-height: 22px;
+    margin-top: 6px;
+    color: gray;
+    font-style: italic;
+    padding-left: 12px;
+}
+
+.meals .checkbox label,
+.upsells .checkbox label {
+    display: block;
+}
+.upsells .checkbox .name {
+}
+.meals .checkbox .price,
+.upsells .checkbox .price {
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 3px;
+}
+.meals .notice,
+.upsells .notice {
+    font-weight: normal;
+    color: #cdcdcd;
+}
+.upsells .desc {
+    clear: both;
+    padding: 0px 0px 9px 0px;
+    font-size: 11px;
+}
+
+.totalPrice {
+    font-size: 28px;
+    font-weight: bold;
+    padding-left: 12px!important;
+    text-align: right;
+}
+
+.totalPriceDiv {
+    margin-top: 75px;
+}
+
+.meals hr {
+    margin-top: 11px;
+    margin-bottom: 3px;
+}
+
+#BookingAdminAddForm input[type="submit"] {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 75px;
+}
