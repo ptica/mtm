@@ -14,8 +14,8 @@
     "tests"
   ],
   "dependencies": {
+    "jquery": "2.1.4",
     "bootstrap": "~3.3.4",
-    "defunctr": "djinncreative/defunctr",
     "validator-js": "~3.38.0",
     "jquery-serialize-object": "~2.4.5",
     "bootbox.js": "makeusabrew/bootbox#~4.4.0",

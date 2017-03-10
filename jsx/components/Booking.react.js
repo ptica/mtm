@@ -4,6 +4,11 @@ var Room = require('./Room.react');
 var BookingActions = require('../actions/BookingActions');
 var RoomAPI = require('../utils/RoomAPI');
 
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 /**
 * Decimal adjustment of a number.
 *
@@ -46,9 +51,11 @@ function getAppState() {
 		rooms: RoomStore.getRooms(),
 		selected_room: RoomStore.getSelectedRoom(),
 		selected_price_type_id: 2, // other // not used now !!!
+		suitable_reg_types: 'member student early'.split(' '),
 		selected_beds: RoomStore.getSelectedBeds(),
 		nights_count: RoomStore.getNightsCount(),
 		selected_upsells: RoomStore.get_selected_upsells(),
+		selected_reg_types: RoomStore.get_selected_reg_types(),
 		selected_meals: RoomStore.get_selected_meals(),
 		selected_queries: RoomStore.get_selected_queries(),
 		booking_id: false,
@@ -72,6 +79,10 @@ var Booking = React.createClass({
 	*/
 	_onChange: function() {
 		this.setState(getAppState());
+	},
+	selectRegType: function (e) {
+		var id = e.target.value;
+		BookingActions.selectRegType(id);
 	},
 	selectRoom: function (room_id) {
 		BookingActions.selectRoom(room_id);
@@ -101,6 +112,18 @@ var Booking = React.createClass({
 		var start = this.refs.start.getDOMNode().value;
 		var end = this.refs.end.getDOMNode().value;
 		BookingActions.setDates(start, end);
+	},
+	get_registration_price: function () {
+		var price = 0;
+		var prices = {
+			'early-member-student': { czk: 4725, eur: 175 }
+		};
+		var reg_type = Object.keys(this.state.selected_reg_types).sort().join('-');
+		if (prices[reg_type]) {
+			price = prices[reg_type]['czk'];
+		}
+		console.log(reg_type);
+		return price;
 	},
 	get_selected_room_price: function () {
 		var price = 0;
@@ -157,6 +180,23 @@ var Booking = React.createClass({
 		}
 	},
 	render: function() {
+		// Price type
+		var selected_reg_types = this.state.selected_reg_types;
+		var reg_types = [];
+		for (var key in this.state.suitable_reg_types) {
+			var reg_type = this.state.suitable_reg_types[key];
+			var checked = (reg_type in selected_reg_types);
+			var dom_id = 'RegType' + reg_type.capitalize();
+			var input =
+				<div className="checkbox" key={key}>
+					<label htmlFor={dom_id} className="">
+						<input checked={checked} onChange={this.selectRegType} type="checkbox" name={`data[${reg_type.capitalize()}]`} value={reg_type} id={dom_id}/>
+						<div className="name">{reg_type.capitalize()}</div>
+					</label>
+				</div>;
+			reg_types.push(input);
+		}
+
 		// Rooms
 		var suitable_rooms = RoomStore.get_suitable_rooms();
 		var rooms_by_id    = RoomStore.get_rooms_by_id();
@@ -247,7 +287,8 @@ var Booking = React.createClass({
 		var room_price    = this.get_selected_room_price();
 		var upsell_price  = this.get_selected_upsells_price();
 		var meal_price    = this.get_selected_meals_price();
-		var total_price   = Math.round10(room_price + upsell_price + meal_price, -2).toFixed(2);
+		var reg_price     = this.get_registration_price();
+		var total_price   = Math.round10(reg_price + room_price + upsell_price + meal_price, -2).toFixed(2);
 
 		var hiddenStyle = {visibility: 'hidden'};
 
@@ -267,19 +308,33 @@ var Booking = React.createClass({
 				<div className="row">
 				<div className="col-md-9">
 				<form onSubmit={this._onSubmit} role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
-					<div className="form-group">
-						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
-						<div className="col-sm-8 input-group">
-							<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of EAMT you plan to attend:</p>
+
+					{reg_types.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
+							<div className="col-sm-8 input-group">
+								{reg_types}
+							</div>
 						</div>
-					</div>
-					<div className="form-group">
-						<label htmlFor="QueryQuery" className="col-sm-2 control-label">EAMT Content</label>
-						<div className="col-sm-8 input-group">
-							<input type="hidden" name="data[Query][Query]" defaultValue id="QueryQuery" />
-							{queries}
+					}
+
+					{queries.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
+							<div className="col-sm-8 input-group">
+								<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of EAMT you plan to attend:</p>
+							</div>
 						</div>
-					</div>
+					}
+					{queries.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label">EAMT Content</label>
+							<div className="col-sm-8 input-group">
+								<input type="hidden" name="data[Query][Query]" defaultValue id="QueryQuery" />
+								{queries}
+							</div>
+						</div>
+					}
 
 					<div className="form-group">
 						<label htmlFor="BookingName" className="col-sm-2 control-label">Your name</label>
@@ -319,32 +374,38 @@ for your printed receipt:
 						</div>
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="BookingStart" className="col-sm-2 control-label">Arrival</label>
-						<div className="col-sm-8 input-group">
-							<div className="input-group">
-								<input ref="start" onChange={this.countNights} data-date-max-date="2017-05-29" data-date-min-date="2017-06-31" defaultValue="29.5.2017" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
-								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
+					{rooms.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="BookingStart" className="col-sm-2 control-label">Arrival</label>
+							<div className="col-sm-8 input-group">
+								<div className="input-group">
+									<input ref="start" onChange={this.countNights} data-date-max-date="2017-05-31" data-date-min-date="2017-05-20" defaultValue="29.5.2017" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
+									<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
+								</div>
 							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group">
-						<label htmlFor="BookingEnd" className="col-sm-2 control-label">Departure</label>
-						<div className="col-sm-8 input-group">
-							<div className="input-group">
-								<input ref="end" onChange={this.countNights} data-date-max-date="2017-06-31" data-date-min-date="2017-06-31" defaultValue="31.6.2017" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
-								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
+					{rooms.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="BookingEnd" className="col-sm-2 control-label">Departure</label>
+							<div className="col-sm-8 input-group">
+								<div className="input-group">
+									<input ref="end" onChange={this.countNights} data-date-max-date="2017-05-31" data-date-min-date="2017-05-20" defaultValue="31.5.2017" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
+									<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
+								</div>
 							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group">
-						<label htmlFor="BookingNights" className="col-sm-2 control-label">Nights</label>
-						<div className="col-sm-8 input-group rooms">
-							<div className="none">{this.state.nights_count}</div>
+					{rooms.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="BookingNights" className="col-sm-2 control-label">Nights</label>
+							<div className="col-sm-8 input-group rooms">
+								<div className="none">{this.state.nights_count}</div>
+							</div>
 						</div>
-					</div>
+					}
 
 					{/*<div className="form-group">
 						<label htmlFor="BookingPriceTypeId" className="col-sm-2 control-label">Price Type</label>
@@ -356,62 +417,76 @@ for your printed receipt:
 						</div>
 					</div>*/}
 
-					<div className="form-group">
-						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
-						<div className="col-sm-8 input-group">
-							<p className="form-control-static">For students (each occupant needs to show a valid ISIC!), a very limited number of rooms in student dormitories is available.</p>
-							{/*<p className="form-control-static">To book a room with a fellow of yours, one of you should book two (or three) beds in a larger room.
-								If you  book just one bed in a larger room, you may want to tell us your preferred party, otherwise,
-								we may need to allocate another random participant to the room.
-							</p>*/}
+					{rooms.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
+							<div className="col-sm-8 input-group">
+								<p className="form-control-static">For students (each occupant needs to show a valid ISIC!), a very limited number of rooms in student dormitories is available.</p>
+								{/*<p className="form-control-static">To book a room with a fellow of yours, one of you should book two (or three) beds in a larger room.
+									If you  book just one bed in a larger room, you may want to tell us your preferred party, otherwise,
+									we may need to allocate another random participant to the room.
+								</p>*/}
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group" style={hiddenStyle}>
-						<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
-						<div className="col-sm-8 input-group">
-							<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="tel" id="BookingBeds" required="required"/>
+					{rooms.length > 0 &&
+						<div className="form-group" style={hiddenStyle}>
+							<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
+							<div className="col-sm-8 input-group">
+								<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="tel" id="BookingBeds" required="required"/>
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group">
-						<label htmlFor="BookingRooms" className="col-sm-2 control-label">Rooms</label>
-						<div className="col-sm-8 input-group rooms">
-							{rooms}
+					{rooms.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="BookingRooms" className="col-sm-2 control-label">Rooms</label>
+							<div className="col-sm-8 input-group rooms">
+								{rooms}
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group" style={hiddenStyle}>
-						<label htmlFor="BookingFellowEmail" className="col-sm-2 control-label">Room Fellows</label>
-						<div className="col-sm-8 input-group">
-							<input ref="fellow_email" name="data[Booking][fellow_email]" className="form-control" placeholder="fill in emails of participants you want to share the room with (comma separated)" maxLength="255" type="text" id="BookingFellowEmail"/>
+					{rooms.length > 0 &&
+						<div className="form-group" style={hiddenStyle}>
+							<label htmlFor="BookingFellowEmail" className="col-sm-2 control-label">Room Fellows</label>
+							<div className="col-sm-8 input-group">
+								<input ref="fellow_email" name="data[Booking][fellow_email]" className="form-control" placeholder="fill in emails of participants you want to share the room with (comma separated)" maxLength="255" type="text" id="BookingFellowEmail"/>
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group">
-						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Addons</label>
-						<div className="col-sm-8 input-group upsells">
-							<input type="hidden" name="data[Upsell][Upsell]" value="" id="UpsellUpsell"/>
-							{upsells}
+					{upsells.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Addons</label>
+							<div className="col-sm-8 input-group upsells">
+								<input type="hidden" name="data[Upsell][Upsell]" value="" id="UpsellUpsell"/>
+								{upsells}
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group">
-						<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
-						<div className="col-sm-8 input-group">
-							<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following EAMT days (Sept 12-Sept 17).</p>
-							<p className="form-control-static">The price is per lunch (includes soup, main dish, dessert and drink).</p>
-							<p className="form-control-static">Participants with these pre-paid lunches will have dedicated tables in the restaurant in the basement. You might be able to get a place (and meal, of course) without this booking, in which case you will be selecting from a daily menu and most importantly, you will have to sit at different tables.</p>
+					{meals.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
+							<div className="col-sm-8 input-group">
+								<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following EAMT days (Sept 12-Sept 17).</p>
+								<p className="form-control-static">The price is per lunch (includes soup, main dish, dessert and drink).</p>
+								<p className="form-control-static">Participants with these pre-paid lunches will have dedicated tables in the restaurant in the basement. You might be able to get a place (and meal, of course) without this booking, in which case you will be selecting from a daily menu and most importantly, you will have to sit at different tables.</p>
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="form-group">
-						<label htmlFor="MealMeal" className="col-sm-2 control-label"></label>
-						<div className="col-sm-8 input-group meals">
-							<input type="hidden" name="data[Meal][Meal]" defaultValue id="MealMeal" />
-							{meals}
+					{meals.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="MealMeal" className="col-sm-2 control-label"></label>
+							<div className="col-sm-8 input-group meals">
+								<input type="hidden" name="data[Meal][Meal]" defaultValue id="MealMeal" />
+								{meals}
+							</div>
 						</div>
-					</div>
+					}
 
 					<div className="form-group totalPriceDiv">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>

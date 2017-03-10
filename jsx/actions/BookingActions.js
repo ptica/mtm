@@ -37,6 +37,12 @@ var BookingActions = {
 			data: room_id
 		});
 	},
+	selectRegType: function(reg_type) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.ADD_REG_TYPE,
+			data: reg_type
+		});
+	},
 	selectUpsell: function(upsell_id) {
 		AppDispatcher.dispatch({
 			actionType: BookingConstants.ADD_UPSELL,

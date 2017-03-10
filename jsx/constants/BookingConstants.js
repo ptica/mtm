@@ -12,4 +12,5 @@ module.exports = keyMirror({
 	ADD_UPSELL: null,
 	ADD_MEAL: null,
 	ADD_QUERY: null,
+	ADD_REG_TYPE: null,
 });

@@ -14,6 +14,7 @@ var _end   = moment('31.6.2017', 'D.M.YYYY');
 var _upsells_by_location = {};
 var _upsells_by_id = {};
 var _selected_upsells = {};
+var _selected_reg_types = {};
 var _meals = {};
 var _queries = {};
 var _selected_meals = {};
@@ -69,6 +70,15 @@ function set_selected_beds(count) {
 function set_selected_nights(data) {
 	_start = moment(data.start, 'D.M.YYYY');
 	_end = moment(data.end, 'D.M.YYYY');
+}
+
+function set_selected_reg_type(reg_type) {
+	// toggle
+	if (_selected_reg_types[reg_type]) {
+		delete _selected_reg_types[reg_type];
+	} else {
+		_selected_reg_types[reg_type] = reg_type;
+	}
 }
 
 function set_selected_upsells(upsell_id) {
@@ -151,6 +161,9 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	get_selected_upsells: function() {
 		return _selected_upsells;
 	},
+	get_selected_reg_types: function() {
+		return _selected_reg_types;
+	},
 	get_selected_meals: function() {
 		return _selected_meals;
 	},
@@ -225,6 +238,11 @@ AppDispatcher.register(function(action) {
 
 		case BookingConstants.ADD_UPSELL:
 			set_selected_upsells(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.ADD_REG_TYPE:
+			set_selected_reg_type(action.data);
 			RoomStore.emitChange();
 			break;
 
