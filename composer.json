@@ -26,7 +26,8 @@
         "codaxis/cakephp-bootstrap3-helpers": "1.1",
         "ceeram/clear_cache": "~1.1",
         "webtechnick/configuration": "dev-bootstrap_theme",
-        "cakephp/debug_kit": "2.2.5"
+        "cakephp/debug_kit": "2.2.5",
+        "google/apiclient": "^2.0"
     },
     "config": {
         "vendor-dir": "Vendor/"

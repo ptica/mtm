@@ -1,0 +1,34 @@
+{
+    "early-member-student": {
+        "czk": "175",
+        "eur": "4725"
+    },
+    "early-member-na": {
+        "czk": "230",
+        "eur": "6210"
+    },
+    "early-na-student": {
+        "czk": "210",
+        "eur": "5670"
+    },
+    "early-na-na": {
+        "czk": "290",
+        "eur": "7830"
+    },
+    "member-na-student": {
+        "czk": "220",
+        "eur": "5940"
+    },
+    "member-na-na": {
+        "czk": "300",
+        "eur": "8100"
+    },
+    "na-na-student": {
+        "czk": "245",
+        "eur": "6615"
+    },
+    "na-na-na": {
+        "czk": "360",
+        "eur": "9720"
+    }
+}
