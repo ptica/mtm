@@ -3,44 +3,10 @@ var RoomStore = require('../stores/RoomStore');
 var Room = require('./Room.react');
 var BookingActions = require('../actions/BookingActions');
 var RoomAPI = require('../utils/RoomAPI');
-
+var round10 = require('round10').round10;
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
-/**
-* Decimal adjustment of a number.
-*
-* @param {String}  type  The type of adjustment.
-* @param {Number}  value The number.
-* @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
-* @returns {Number} The adjusted value.
-*/
-function decimalAdjust(type, value, exp) {
-	// If the exp is undefined or zero...
-	if (typeof exp === 'undefined' || +exp === 0) {
-	  return Math[type](value);
-	}
-	value = +value;
-	exp = +exp;
-	// If the value is not a number or the exp is not an integer...
-	if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
-	  return NaN;
-	}
-	// Shift
-	value = value.toString().split('e');
-	value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
-	// Shift back
-	value = value.toString().split('e');
-	return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
-}
-
-// Decimal round
-if (!Math.round10) {
-	Math.round10 = function(value, exp) {
-	  return decimalAdjust('round', value, exp);
-	};
 }
 
 /**
@@ -51,12 +17,12 @@ function getAppState() {
 		rooms: RoomStore.getRooms(),
 		selected_room: RoomStore.getSelectedRoom(),
 		selected_price_type_id: 2, // other // not used now !!!
-		suitable_reg_types: 'member student early'.split(' '),
 		reg_type_prices: RoomStore.getRegTypePrices(),
 		selected_beds: RoomStore.getSelectedBeds(),
 		nights_count: RoomStore.getNightsCount(),
 		selected_upsells: RoomStore.get_selected_upsells(),
 		selected_reg_types: RoomStore.get_selected_reg_types(),
+		suitable_reg_types: 'member student early'.split(' '),
 		selected_meals: RoomStore.get_selected_meals(),
 		selected_queries: RoomStore.get_selected_queries(),
 		booking_id: false,
@@ -286,7 +252,7 @@ var Booking = React.createClass({
 		var upsell_price  = this.get_selected_upsells_price();
 		var meal_price    = this.get_selected_meals_price();
 		var reg_price     = this.get_registration_price();
-		var total_price   = Math.round10(reg_price + room_price + upsell_price + meal_price, -2).toFixed(2);
+		var total_price   = round10(reg_price + room_price + upsell_price + meal_price, -2).toFixed(2);
 
 		var hiddenStyle = {visibility: 'hidden'};
 
