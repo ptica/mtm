@@ -60,11 +60,14 @@ class RoomsController extends AppController {
 		$queries = $this->Query->find('all');
 		$queries = Hash::combine($queries, '{n}.Query.id', '{n}.Query');
 
+		$reg_types = file_get_contents(APP . 'Config/prices.json');
+
 		$res = array(
 			'rooms' => $rooms,
 			'upsells' => $upsells,
 			'meals' => $meals,
-			'queries' => $queries
+			'queries' => $queries,
+			'reg_types' => json_decode($reg_types, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
 		);
 
 		//debug($res);

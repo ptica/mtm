@@ -30,6 +30,12 @@ var BookingActions = {
 			data: queries
 		});
 	},
+	receiveRegTypes: function(reg_types) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.RECEIVE_REG_TYPES,
+			data: reg_types
+		});
+	},
 	// Set currently selected room_id
 	selectRoom: function(room_id) {
 		AppDispatcher.dispatch({

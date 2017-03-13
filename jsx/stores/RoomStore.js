@@ -19,6 +19,12 @@ var _meals = {};
 var _queries = {};
 var _selected_meals = {};
 var _selected_queries = {};
+var _reg_types = {};
+
+function receive_reg_types(reg_types) {
+	// Have just received ROOM list from the server API.
+	_reg_types = reg_types;
+}
 
 function receive_rooms(rooms) {
 	// Have just received ROOM list from the server API.
@@ -145,6 +151,10 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 		return _queries;
 	},
 
+	getRegTypePrices: function() {
+		return _reg_types;
+	},
+
 	get_suitable_rooms: function () {
 		var all_rooms = this.getRooms();
 		var selected_beds = this.getSelectedBeds();
@@ -201,8 +211,8 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
 	switch(action.actionType) {
-		case BookingConstants.RECEIVE_ROOMS:
-			receive_rooms(action.data);
+		case BookingConstants.RECEIVE_REG_TYPES:
+			receive_reg_types(action.data);
 			RoomStore.emitChange();
 			break;
 

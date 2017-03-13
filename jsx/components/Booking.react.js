@@ -52,6 +52,7 @@ function getAppState() {
 		selected_room: RoomStore.getSelectedRoom(),
 		selected_price_type_id: 2, // other // not used now !!!
 		suitable_reg_types: 'member student early'.split(' '),
+		reg_type_prices: RoomStore.getRegTypePrices(),
 		selected_beds: RoomStore.getSelectedBeds(),
 		nights_count: RoomStore.getNightsCount(),
 		selected_upsells: RoomStore.get_selected_upsells(),
@@ -115,15 +116,12 @@ var Booking = React.createClass({
 	},
 	get_registration_price: function () {
 		var price = 0;
-		var prices = {
-			'early-member-student': { czk: 4725, eur: 175 }
-		};
+		var prices = this.state.reg_type_prices;
 		var reg_type = Object.keys(this.state.selected_reg_types).sort().join('-');
 		if (prices[reg_type]) {
 			price = prices[reg_type]['czk'];
 		}
-		console.log(reg_type);
-		return price;
+		return Number(price);
 	},
 	get_selected_room_price: function () {
 		var price = 0;

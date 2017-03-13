@@ -82,8 +82,9 @@ class V4 {
         $values = $this->getData($spreadsheetId, $range);
         $prices = [];
         foreach ($values as $row) {
-            $czk = array_pop($row);
-            $eur = array_pop($row);
+            $eur = (int) array_pop($row);
+            $czk = (int) array_pop($row);
+            $row = array_filter($row, function ($v) { return $v != 'na'; } );
             sort($row);
             $key = implode('-', $row);
             $prices[$key] = compact('czk', 'eur');

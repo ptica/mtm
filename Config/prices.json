@@ -1,34 +1,34 @@
 {
     "early-member-student": {
-        "czk": "175",
-        "eur": "4725"
+        "czk": 4725,
+        "eur": 175
     },
-    "early-member-na": {
-        "czk": "230",
-        "eur": "6210"
+    "early-member": {
+        "czk": 6210,
+        "eur": 230
     },
-    "early-na-student": {
-        "czk": "210",
-        "eur": "5670"
+    "early-student": {
+        "czk": 5670,
+        "eur": 210
     },
-    "early-na-na": {
-        "czk": "290",
-        "eur": "7830"
+    "early": {
+        "czk": 7830,
+        "eur": 290
     },
-    "member-na-student": {
-        "czk": "220",
-        "eur": "5940"
+    "member-student": {
+        "czk": 5940,
+        "eur": 220
     },
-    "member-na-na": {
-        "czk": "300",
-        "eur": "8100"
+    "member": {
+        "czk": 8100,
+        "eur": 300
     },
-    "na-na-student": {
-        "czk": "245",
-        "eur": "6615"
+    "student": {
+        "czk": 6615,
+        "eur": 245
     },
-    "na-na-na": {
-        "czk": "360",
-        "eur": "9720"
+    "": {
+        "czk": 9720,
+        "eur": 360
     }
 }
