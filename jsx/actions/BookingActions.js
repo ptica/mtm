@@ -36,6 +36,12 @@ var BookingActions = {
 			data: reg_types
 		});
 	},
+	receiveLateRegStart: function(late_reg_start) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.RECEIVE_LATE_REG_START,
+			data: late_reg_start
+		});
+	},
 	// Set currently selected room_id
 	selectRoom: function(room_id) {
 		AppDispatcher.dispatch({

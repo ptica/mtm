@@ -7,6 +7,7 @@ module.exports = keyMirror({
 	RECEIVE_MEALS: null,
 	RECEIVE_QUERIES: null,
 	RECEIVE_REG_TYPES: null,
+	RECEIVE_LATE_REG_START: null,
 	SET_SELECTED: null,
 	SET_BEDS: null,
 	SET_NIGHTS: null,

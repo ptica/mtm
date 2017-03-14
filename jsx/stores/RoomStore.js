@@ -14,12 +14,24 @@ var _end   = moment('31.6.2017', 'D.M.YYYY');
 var _upsells_by_location = {};
 var _upsells_by_id = {};
 var _selected_upsells = {};
-var _selected_reg_types = {};
 var _meals = {};
 var _queries = {};
 var _selected_meals = {};
 var _selected_queries = {};
 var _reg_types = {};
+var _selected_reg_types = {};
+var _late_reg_start = moment('1.1.1970', 'D.M.YYYY');
+
+function receive_late_reg_start(late_reg_start) {
+	// Have just received data from the server API.
+	_late_reg_start = late_reg_start;
+	now = moment();
+	start = moment(late_reg_start);
+	if (now <= start) {
+		// update selected_reg_types
+		set_selected_reg_type('early');
+	}
+}
 
 function receive_reg_types(reg_types) {
 	// Have just received ROOM list from the server API.
@@ -180,6 +192,9 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	get_selected_queries: function() {
 		return _selected_queries;
 	},
+	get_late_reg_start: function () {
+		return _late_reg_start;
+	},
 
 	getStart: function() {
 		return _start;
@@ -228,6 +243,11 @@ AppDispatcher.register(function(action) {
 
 		case BookingConstants.RECEIVE_QUERIES:
 			receive_queries(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.RECEIVE_LATE_REG_START:
+			receive_late_reg_start(action.data);
 			RoomStore.emitChange();
 			break;
 

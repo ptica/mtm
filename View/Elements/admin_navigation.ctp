@@ -1,13 +1,14 @@
 <?php
 	$links = array(
-		'Locations'  => '/admin/locations',
-		'Upsells' => '/admin/upsells',
-		'Price Types' => '/admin/price_types',
-		'Rooms' => '/admin/rooms',
-		'Prices' => '/admin/prices',
+		//'Locations'  => '/admin/locations',
+		//'Upsells' => '/admin/upsells',
+		//'Price Types' => '/admin/price_types',
+		//'Rooms' => '/admin/rooms',
+		//'Prices' => '/admin/prices',
 		'Bookings' => '/admin/bookings',
 		'Survey' => '/admin/queries',
-		'Meals' => '/admin/meals',
+		//'Meals' => '/admin/meals',
+		'Prices' => 'admin/reg_types',
 	);
 ?>
 <div class="actions">

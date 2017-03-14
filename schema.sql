@@ -5,6 +5,18 @@ SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+
+DROP TABLE IF EXISTS `configurations`;
+CREATE TABLE `configurations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `configurations` (`id`, `name`, `value`) VALUES
+(1,	'late_registration_start_date',	'2017-04-29 00:00:00');
+
 DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

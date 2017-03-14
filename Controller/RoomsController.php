@@ -5,7 +5,7 @@ class RoomsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
-	public $uses = array('Room', 'Upsell', 'Location', 'Meal', 'Query');
+	public $uses = array('Room', 'Upsell', 'Location', 'Meal', 'Query', 'Configuration');
 
 	// declare public actions
 	public function beforeFilter() {
@@ -62,12 +62,15 @@ class RoomsController extends AppController {
 
 		$reg_types = file_get_contents(APP . 'Config/prices.json');
 
+		$late_reg_start = $this->Configuration->findByName('late_registration_start_date');
+
 		$res = array(
 			'rooms' => $rooms,
 			'upsells' => $upsells,
 			'meals' => $meals,
 			'queries' => $queries,
 			'reg_types' => json_decode($reg_types, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
+			'late_reg_start' => $late_reg_start['Configuration']['value'],
 		);
 
 		//debug($res);

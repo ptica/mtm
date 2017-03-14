@@ -2,11 +2,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="page-header">
-					<ul class="nav nav-pills pull-right">
-						<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;' . __('New Price Type'), array('action' => 'add'), array('escape' => false)); ?></li>
-						<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-sort"></span>&nbsp;&nbsp;' . __('Reorder'), array('action' => 'reorder'), array('escape' => false)); ?></li>
-					</ul>
-								<h1><?php echo __('Price Types'); ?></h1>
+				<ul class="nav nav-pills pull-right">
+					<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;' . __('New Price Type'), array('action' => 'add'), array('escape' => false)); ?></li>
+					<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-sort"></span>&nbsp;&nbsp;' . __('Reorder'), array('action' => 'reorder'), array('escape' => false)); ?></li>
+				</ul>
+				<h1><?php echo __('Price Types'); ?></h1>
 			</div>
 		</div>
 	</div>

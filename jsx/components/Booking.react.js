@@ -23,6 +23,7 @@ function getAppState() {
 		selected_upsells: RoomStore.get_selected_upsells(),
 		selected_reg_types: RoomStore.get_selected_reg_types(),
 		suitable_reg_types: 'member student early'.split(' '),
+		late_reg_start: RoomStore.get_late_reg_start(),
 		selected_meals: RoomStore.get_selected_meals(),
 		selected_queries: RoomStore.get_selected_queries(),
 		booking_id: false,
@@ -158,7 +159,7 @@ var Booking = React.createClass({
 						<div className="name">{reg_type.capitalize()}</div>
 					</label>
 				</div>;
-			reg_types.push(input);
+			if (reg_type != 'early') reg_types.push(input);
 		}
 
 		// Rooms

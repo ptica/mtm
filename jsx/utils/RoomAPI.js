@@ -12,6 +12,7 @@ module.exports = {
 			BookingActions.receiveMeals(data.meals);
 			BookingActions.receiveQueries(data.queries);
 			BookingActions.receiveRegTypes(data.reg_types);
+			BookingActions.receiveLateRegStart(data.late_reg_start);
 		});
 	}
 };
