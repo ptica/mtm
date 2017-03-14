@@ -8,7 +8,7 @@
 		'Bookings' => '/admin/bookings',
 		'Survey' => '/admin/queries',
 		//'Meals' => '/admin/meals',
-		'Prices' => 'admin/reg_types',
+		'Prices' => '/admin/reg_types',
 	);
 ?>
 <div class="actions">
