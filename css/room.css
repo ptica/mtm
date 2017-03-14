@@ -86,6 +86,11 @@
     padding-left: 12px!important;
     text-align: right;
 }
+.totalPrice .notice {
+    font-size: 12px;
+    font-weight: normal;
+    margin-right: 19px;
+}
 
 .totalPriceDiv {
     margin-top: 75px;

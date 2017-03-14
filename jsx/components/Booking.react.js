@@ -81,12 +81,12 @@ var Booking = React.createClass({
 		var end = this.refs.end.getDOMNode().value;
 		BookingActions.setDates(start, end);
 	},
-	get_registration_price: function () {
+	get_registration_price: function (currency='czk') {
 		var price = 0;
 		var prices = this.state.reg_type_prices;
 		var reg_type = Object.keys(this.state.selected_reg_types).sort().join('-');
 		if (prices[reg_type]) {
-			price = prices[reg_type]['czk'];
+			price = prices[reg_type][currency];
 		}
 		return Number(price);
 	},
@@ -253,7 +253,10 @@ var Booking = React.createClass({
 		var upsell_price  = this.get_selected_upsells_price();
 		var meal_price    = this.get_selected_meals_price();
 		var reg_price     = this.get_registration_price();
-		var total_price   = round10(reg_price + room_price + upsell_price + meal_price, -2).toFixed(2);
+		var eur_reg_price = this.get_registration_price('eur');
+		var total_price_czk = round10(reg_price + room_price + upsell_price + meal_price, -2).toFixed(2);
+		var CZKEUR = 27;
+		var total_price_eur = round10(eur_reg_price + room_price/CZKEUR + upsell_price/CZKEUR + meal_price/CZKEUR, -2).toFixed(2);
 
 		var hiddenStyle = {visibility: 'hidden'};
 
@@ -455,8 +458,11 @@ for your printed receipt:
 
 					<div className="form-group totalPriceDiv">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>
-						<div className="col-sm-8 input-group totalPrice"><span className="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;{total_price} CZK</div>
-						<input type="hidden" name="data[Booking][web_price]" value={total_price} id="BookingWebPrice"/>
+						<div className="col-sm-8 input-group totalPrice">
+							<span className="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;{total_price_czk} CZK
+							<div className="notice">approximately {total_price_eur} EUR</div>
+						</div>
+						<input type="hidden" name="data[Booking][web_price]" value={total_price_czk} id="BookingWebPrice"/>
 					</div>
 
 					<div className="form-group">
