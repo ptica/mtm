@@ -14,9 +14,8 @@
 							Once everything is ok please proceed to the payment.
 						</p>
 						<p class="form-control-static">
-							To confirm your booking of the paid items, the payment has to be made <b style="color:#000">before Aug 20</b>.
+							To confirm your booking of the paid items, the payment has to be made <b style="color:#000">before TODO TODO!!!</b>.
 							An e-mail has been sent to you with a link back to this page in case you cannot make the payment now.
-							Note that the accommodation is very likely to be sold out, though.
 						</p>
 					</div>
 				</div>
