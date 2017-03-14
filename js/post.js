@@ -69,11 +69,15 @@ $('.list-group').each(function (i,e) {
 
 
 App.fill = function () {
-	$('form.fill input').not('[data-provide="datepicker"]').each(function (i,e) {
-		var $e = $(e);
-		var id = $e.attr('id');
-		if (id) {
-			$e.val(id.replace('Booking', ''));
+	$('form.fill input')
+		.not('[data-provide="datepicker"]')
+		.not('[type="checkbox"]')
+		.not('#BookingWebPrice')
+		.each(function (i,e) {
+			var $e = $(e);
+			var id = $e.attr('id');
+			if (id) {
+				$e.val(id.replace('Booking', ''));
 		}
 	});
 	$('form.fill input[type="email"]').val('jan.ptacek@gmail.com');

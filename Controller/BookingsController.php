@@ -65,7 +65,7 @@ class BookingsController extends AppController {
 			$sanitized_data = array();
 			$sanitized_data['Booking'] = array_intersect_key($this->request->data['Booking'], $allowed_fields);
 			$sanitized_data['Booking']['id'] = $id;
-			$sanitized_data['Query'] = $this->request->data['Query'];
+			if (@$this->request->data['Query']) $sanitized_data['Query'] = $this->request->data['Query'];
 
 			if ($this->Booking->save($sanitized_data)) {
 				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));

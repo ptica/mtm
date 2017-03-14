@@ -80,55 +80,70 @@
 					</div>
 				<?php } ?>
 
-				<div class="form-group">
-					<?php echo $this->Form->input('Upsell', array('disabled'=>'disabled', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
-				</div>
+				<?php if ($this->request->data['Upsell']) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('Upsell', array('disabled'=>'disabled', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					</div>
+				<?php } ?>
 
-				<div class="form-group">
-					<?php echo $this->Form->input('start', array(
-						'type' => 'text',
-						'data-provide' => 'datepicker',
-						'data-date-language' => Configure::read('Config.locale'),
-						'class' => 'form-control',
-						'label' => __('Arrival'),
-						'placeholder' => __('Start'),
-						'inputGroup' => array('append'=>'glyphicon-th'),
-						//BEWARE: datepicker needs JS initialization
-						'value' => $this->Time->format($this->data['Booking']['start'], '%-d.%-m.%Y'),
-						'disabled'=>'disabled'
-					));?>
-				</div>
-				<div class="form-group">
-					<?php echo $this->Form->input('end', array(
-						'type' => 'text',
-						'data-provide' => 'datepicker',
-						'data-date-language' => Configure::read('Config.locale'),
-						'class' => 'form-control',
-						'label' => __('Departure'),
-						'placeholder' => __('End'),
-						'inputGroup' => array('append'=>'glyphicon-th'),
-						//BEWARE: datepicker needs JS initialization
-						'value' => $this->Time->format($this->data['Booking']['end'], '%-d.%-m.%Y'),
-						'disabled'=>'disabled'
-					));?>
-				</div>
+				<?php if ($this->request->data['Booking']['start']) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('start', array(
+							'type' => 'text',
+							'data-provide' => 'datepicker',
+							'data-date-language' => Configure::read('Config.locale'),
+							'class' => 'form-control',
+							'label' => __('Arrival'),
+							'placeholder' => __('Start'),
+							'inputGroup' => array('append'=>'glyphicon-th'),
+							//BEWARE: datepicker needs JS initialization
+							'value' => $this->Time->format($this->data['Booking']['start'], '%-d.%-m.%Y'),
+							'disabled'=>'disabled'
+						));?>
+					</div>
+					<div class="form-group">
+						<?php echo $this->Form->input('end', array(
+							'type' => 'text',
+							'data-provide' => 'datepicker',
+							'data-date-language' => Configure::read('Config.locale'),
+							'class' => 'form-control',
+							'label' => __('Departure'),
+							'placeholder' => __('End'),
+							'inputGroup' => array('append'=>'glyphicon-th'),
+							//BEWARE: datepicker needs JS initialization
+							'value' => $this->Time->format($this->data['Booking']['end'], '%-d.%-m.%Y'),
+							'disabled'=>'disabled'
+						));?>
+					</div>
+				<?php } ?>
+
 				<div class="form-group">
 					<?php echo $this->Form->input('email', array('label'=>'Your email', 'class'=>'form-control', 'placeholder'=>__('Email')));?>
 				</div>
-				<!--div class="form-group">
-					<?php echo $this->Form->input('fellow_email', array('label'=>'Room Fellows', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
-				</div-->
-				<?php if (!empty($booking['Booking']['Upsell'])) { ?>
+
+				<?php if ($this->request->data['Booking']['fellow_email']) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('fellow_email', array('label'=>'Room Fellows', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					</div>
+				<?php } ?>
+
+				<?php if (!empty($booking['Upsell'])) { ?>
 					<div class="form-group">
 						<?php echo $this->Form->input('Upsell', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
 					</div>
 				<?php } ?>
-				<div class="form-group">
-					<?php echo $this->Form->input('Meal', array('label'=>'Lunches', 'disabled'=>'disabled', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Meals')));?>
-				</div>
-				<div class="form-group">
-					<?php echo $this->Form->input('Query', array('label'=>'EAMT Content', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Queries')));?>
-				</div>
+
+				<?php if (!empty($booking['Meal'])) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('Meal', array('label'=>'Lunches', 'disabled'=>'disabled', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Meals')));?>
+					</div>
+				<?php } ?>
+
+				<?php if (!empty($booking['Query'])) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('Query', array('label'=>'EAMT Content', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Queries')));?>
+					</div>
+				<?php } ?>
 
 				<div class="form-group totalPriceDiv">
 					<label for="UpsellUpsell" class="col-sm-2 control-label">Total price</label>
