@@ -15,4 +15,5 @@ module.exports = keyMirror({
 	ADD_MEAL: null,
 	ADD_QUERY: null,
 	ADD_REG_TYPE: null,
+	ADD_REG_ITEM: null,
 });

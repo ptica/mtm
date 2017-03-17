@@ -18,8 +18,15 @@ var _meals = {};
 var _queries = {};
 var _selected_meals = {};
 var _selected_queries = {};
-var _reg_types = {};
+var _reg_types = {
+	eamt: {},
+	workshop: {}
+};
 var _selected_reg_types = {};
+var _selected_reg_items = {
+	'eamt': 'eamt',
+	'workshop': 'workshop'
+};
 var _late_reg_start = moment('1.1.1970', 'D.M.YYYY');
 
 function receive_late_reg_start(late_reg_start) {
@@ -96,6 +103,14 @@ function set_selected_reg_type(reg_type) {
 		delete _selected_reg_types[reg_type];
 	} else {
 		_selected_reg_types[reg_type] = reg_type;
+	}
+}
+function set_selected_reg_item(reg_item) {
+	// toggle
+	if (_selected_reg_items[reg_item]) {
+		delete _selected_reg_items[reg_item];
+	} else {
+		_selected_reg_items[reg_item] = reg_item;
 	}
 }
 
@@ -186,6 +201,9 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	get_selected_reg_types: function() {
 		return _selected_reg_types;
 	},
+	get_selected_reg_items: function() {
+		return _selected_reg_items;
+	},
 	get_selected_meals: function() {
 		return _selected_meals;
 	},
@@ -273,6 +291,11 @@ AppDispatcher.register(function(action) {
 
 		case BookingConstants.ADD_REG_TYPE:
 			set_selected_reg_type(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.ADD_REG_ITEM:
+			set_selected_reg_item(action.data);
 			RoomStore.emitChange();
 			break;
 

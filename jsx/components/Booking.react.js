@@ -23,6 +23,11 @@ function getAppState() {
 		selected_upsells: RoomStore.get_selected_upsells(),
 		selected_reg_types: RoomStore.get_selected_reg_types(),
 		suitable_reg_types: 'member student early'.split(' '),
+		selected_reg_items: RoomStore.get_selected_reg_items(),
+		suitable_reg_items: {
+			eamt: 'Main Conference (May 29-31)',
+			workshop: ' Workshop Social Media and User Generated Content Machine Translation (May 31)'
+		},
 		late_reg_start: RoomStore.get_late_reg_start(),
 		selected_meals: RoomStore.get_selected_meals(),
 		selected_queries: RoomStore.get_selected_queries(),
@@ -51,6 +56,10 @@ var Booking = React.createClass({
 	selectRegType: function (e) {
 		var id = e.target.value;
 		BookingActions.selectRegType(id);
+	},
+	selectRegItem: function (e) {
+		var id = e.target.value;
+		BookingActions.selectRegItem(id);
 	},
 	selectRoom: function (room_id) {
 		BookingActions.selectRoom(room_id);
@@ -82,13 +91,24 @@ var Booking = React.createClass({
 		BookingActions.setDates(start, end);
 	},
 	get_registration_price: function (currency='czk') {
-		var price = 0;
-		var prices = this.state.reg_type_prices;
-		var reg_type = Object.keys(this.state.selected_reg_types).sort().join('-');
-		if (prices[reg_type]) {
-			price = prices[reg_type][currency];
+		var prices = {
+			eamt: 0,
+			workshop: 0
+		};
+		var price_workshop = 0;
+		var price_defs = this.state.reg_type_prices;
+		var keys = {
+			eamt: Object.keys(this.state.selected_reg_types).sort().join('-'),
+			workshop: this.state.selected_reg_types['member'] ? 'member' : ''
+		};
+		for (item in this.state.selected_reg_items) {
+			var key = keys[item];
+			if (price_defs[item][key]) {
+				prices[item] = Number(price_defs[item][key][currency]);
+			}
 		}
-		return Number(price);
+		
+		return Object.values(prices).reduce((a, b) => a + b);
 	},
 	get_selected_room_price: function () {
 		var price = 0;
@@ -145,6 +165,23 @@ var Booking = React.createClass({
 		}
 	},
 	render: function() {
+		// Reg items
+		var selected_reg_items = this.state.selected_reg_items;
+		var reg_items = [];
+		for (var key in this.state.suitable_reg_items) {
+			var reg_item = this.state.suitable_reg_items[key];
+			var checked = (key in selected_reg_items);
+			var dom_id = 'RegItem' + key.capitalize();
+			var input =
+				<div className="checkbox" key={key}>
+					<label htmlFor={dom_id} className="">
+						<input checked={checked} onChange={this.selectRegItem} type="checkbox" name={`data[${key.capitalize()}]`} value={key} id={dom_id}/>
+						<div className="name">{reg_item}</div>
+					</label>
+				</div>;
+				reg_items.push(input);
+		}
+
 		// Price type
 		var selected_reg_types = this.state.selected_reg_types;
 		var reg_types = [];
@@ -276,6 +313,15 @@ var Booking = React.createClass({
 				<div className="row">
 				<div className="col-md-9">
 				<form onSubmit={this._onSubmit} role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
+
+					{reg_items.length > 0 &&
+						<div className="form-group">
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
+							<div className="col-sm-8 input-group">
+								{reg_items}
+							</div>
+						</div>
+					}
 
 					{reg_types.length > 0 &&
 						<div className="form-group">

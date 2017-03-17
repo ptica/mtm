@@ -60,7 +60,8 @@ class RoomsController extends AppController {
 		$queries = $this->Query->find('all');
 		$queries = Hash::combine($queries, '{n}.Query.id', '{n}.Query');
 
-		$reg_types = file_get_contents(APP . 'Config/prices.json');
+		$reg_types_1 = file_get_contents(APP . 'Config/price-eamt.json');
+		$reg_types_2 = file_get_contents(APP . 'Config/price-workshop.json');
 
 		$late_reg_start = $this->Configuration->findByName('late_registration_start_date');
 
@@ -69,7 +70,10 @@ class RoomsController extends AppController {
 			'upsells' => $upsells,
 			'meals' => $meals,
 			'queries' => $queries,
-			'reg_types' => json_decode($reg_types, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
+			'reg_types' => [
+				'eamt'     => json_decode($reg_types_1, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
+				'workshop' => json_decode($reg_types_2, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
+			],
 			'late_reg_start' => $late_reg_start['Configuration']['value'],
 		);
 
