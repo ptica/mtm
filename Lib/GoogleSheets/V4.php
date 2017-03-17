@@ -55,48 +55,31 @@ class V4 {
       return $client;
     }
 
-    // Get the API client and construct the service object.
     public function getData($spreadsheetId, $range) {
         $client = $this->getClient();
         $service = new Google_Service_Sheets($client);
-
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
-        return $values;
-
         if (count($values) == 0) {
           print "No data found.\n";
-        } else {
-          print "member, student, early, czk, eur:\n";
-          foreach ($values as $row) {
-            // Print columns A and E, which correspond to indices 0 and 4.
-            printf("%s, %s, %s, %s, %s\n", $row[0], $row[1], $row[2], $row[3], $row[4]);
-          }
         }
-    }
-
-    public function getPrices() {
-        $spreadsheetId = '1D2OpAdVu01xhcbVqQv3N9YVg4FpSAPbIw5_igi-JsBQ';
-        $range = 'Prices!A2:E'; # skip first header row
-
-        $values = $this->getData($spreadsheetId, $range);
-        $prices = [];
+        $data = [];
         foreach ($values as $row) {
             $eur = (int) array_pop($row);
             $czk = (int) array_pop($row);
             $row = array_filter($row, function ($v) { return $v != 'na'; } );
             sort($row);
             $key = implode('-', $row);
-            $prices[$key] = compact('czk', 'eur');
+            $data[$key] = compact('czk', 'eur');
         }
 
-        $prices = json_encode($prices, JSON_PRETTY_PRINT);
-        return $prices;
+        $data = json_encode($data, JSON_PRETTY_PRINT);
+        return $data;
     }
 
-    public function savePrices($filename) {
-        $prices = $this->getPrices();
-        if (file_put_contents($filename, $prices) === false) {
+    public function saveData($filename, $spreadsheetId, $range) {
+        $data = $this->getData($spreadsheetId, $range);
+        if (file_put_contents($filename, $data) === false) {
             return "Error writting prices.\n";
         } else {
             return "$filename written ok\n";
@@ -107,5 +90,7 @@ class V4 {
 // called from command line to authenticate and store the data
 if (php_sapi_name() == 'cli') {
     $v4 = new V4();
-    echo $v4->savePrices(APP . 'Config/prices.json');
+    $spreadsheetId = '1D2OpAdVu01xhcbVqQv3N9YVg4FpSAPbIw5_igi-JsBQ';
+    echo $v4->saveData(APP . 'Config/price-eamt.json', $spreadsheetId, $range = 'EAMT!A2:E');
+    echo $v4->saveData(APP . 'Config/price-workshop.json', $spreadsheetId, $range = 'Workshop!A2:C');
 }
