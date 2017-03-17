@@ -70,10 +70,10 @@ class RoomsController extends AppController {
 			'upsells' => $upsells,
 			'meals' => $meals,
 			'queries' => $queries,
-			'reg_types' => [
+			'reg_types' => array(
 				'eamt'     => json_decode($reg_types_1, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
 				'workshop' => json_decode($reg_types_2, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
-			],
+			),
 			'late_reg_start' => $late_reg_start['Configuration']['value'],
 		);
 
