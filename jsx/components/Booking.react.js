@@ -99,7 +99,7 @@ var Booking = React.createClass({
 		var price_defs = this.state.reg_type_prices;
 		var keys = {
 			eamt: Object.keys(this.state.selected_reg_types).sort().join('-'),
-			workshop: this.state.selected_reg_types['member'] ? 'member' : ''
+			workshop: this.state.selected_reg_types['student'] ? 'student' : ''
 		};
 		for (item in this.state.selected_reg_items) {
 			var key = keys[item];
@@ -107,7 +107,7 @@ var Booking = React.createClass({
 				prices[item] = Number(price_defs[item][key][currency]);
 			}
 		}
-		
+
 		return Object.values(prices).reduce((a, b) => a + b);
 	},
 	get_selected_room_price: function () {
