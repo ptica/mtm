@@ -18,7 +18,9 @@ var _meals = {};
 var _queries = {};
 var _selected_meals = {};
 var _selected_queries = {};
-var _reg_types = {
+var _reg_types = {};
+var _reg_items = {};
+var _reg_prices = {
 	eamt: {},
 	workshop: {}
 };
@@ -38,6 +40,16 @@ function receive_late_reg_start(late_reg_start) {
 		// update selected_reg_types
 		set_selected_reg_type('early');
 	}
+}
+
+function receive_reg_prices(reg_prices) {
+	// Have just received ROOM list from the server API.
+	_reg_prices = reg_prices;
+}
+
+function receive_reg_items(reg_items) {
+	// Have just received ROOM list from the server API.
+	_reg_items = reg_items;
 }
 
 function receive_reg_types(reg_types) {
@@ -179,6 +191,14 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	},
 
 	getRegTypePrices: function() {
+		return _reg_prices;
+	},
+
+	get_suitable_reg_items: function() {
+		return _reg_items;
+	},
+
+	get_suitable_reg_types: function() {
 		return _reg_types;
 	},
 
@@ -246,6 +266,16 @@ AppDispatcher.register(function(action) {
 	switch(action.actionType) {
 		case BookingConstants.RECEIVE_REG_TYPES:
 			receive_reg_types(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.RECEIVE_REG_ITEMS:
+			receive_reg_items(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.RECEIVE_REG_PRICES:
+			receive_reg_prices(action.data);
 			RoomStore.emitChange();
 			break;
 

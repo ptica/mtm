@@ -11,7 +11,9 @@ module.exports = {
 			BookingActions.receiveUpsells(data.upsells);
 			BookingActions.receiveMeals(data.meals);
 			BookingActions.receiveQueries(data.queries);
-			BookingActions.receiveRegTypes(data.reg_types);
+			BookingActions.receiveRegPrices(data.reg_prices);
+			BookingActions.receiveRegTypes(data.suitable_reg_types);
+			BookingActions.receiveRegItems(data.suitable_reg_items);
 			BookingActions.receiveLateRegStart(data.late_reg_start);
 		});
 	}

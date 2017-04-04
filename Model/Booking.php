@@ -96,6 +96,32 @@ class Booking extends AppModel {
 			'limit' => '',
 			'offset' => '',
 			'finderQuery' => '',
+		),
+		'RegItem' => array(
+			'className' => 'RegItem',
+			'joinTable' => 'bookings_reg_items',
+			'foreignKey' => 'booking_id',
+			'associationForeignKey' => 'reg_item_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+		'RegType' => array(
+			'className' => 'RegType',
+			'joinTable' => 'bookings_reg_types',
+			'foreignKey' => 'booking_id',
+			'associationForeignKey' => 'reg_type_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
 		)
 	);
 
@@ -105,7 +131,7 @@ class Booking extends AppModel {
 			if (@!$item['Booking']['room_id']) {
 				$item['Booking']['beds'] = 0;
 			}
-			
+
 			if (isset($item['Booking']['start']) &&
 				isset($item['Booking']['end'])
 			) {
@@ -128,12 +154,12 @@ class Booking extends AppModel {
 		}
 		return $result;
 	}
-	
+
 	public function get_price($booking, $per_partes=false) {
 		$rooms = $this->Room->get_rooms_by_id();
 		//$upsells = $this->Upsell->get_upsells_by_location();
 		//$meals = $this->Meals->get_meals_by_id();
-		
+
 		// price_room
 		$start  = explode(' ', $booking['Booking']['start']);
 		$end    = explode(' ', $booking['Booking']['end']);
@@ -142,23 +168,23 @@ class Booking extends AppModel {
 		$nights = $end - $start;
 		$nights = floor($nights/(60*60*24));
 		$room_id = $booking['Booking']['room_id'];
-		
+
 		$price_room = $booking['Booking']['beds'] * $nights * @$rooms[$room_id]['Price'];
-		
+
 		// price_meals
 		$price_meals = 0;
 		if (!empty($booking['Meal'])) foreach ($booking['Meal'] as $meal) {
 			$price_meals += $meal['price'];
 		}
-		
+
 		// price addons
 		$price_addons = 0;
 		if (!empty($booking['Upsell'])) foreach ($booking['Upsell'] as $upsell) {
 			$price_addons += $booking['Booking']['beds'] * $nights * $upsell['price'];
 		}
-		
+
 		$price =  $price_room + $price_meals + $price_addons;
-		
+
 		if ($per_partes) {
 			return array(
 				'room' => $price_room,

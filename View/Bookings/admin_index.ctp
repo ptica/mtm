@@ -19,22 +19,25 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-2">
+			<?php echo $this->element('admin_navigation'); ?>
+		</div>
+		<div class="col-md-10">
 			<table cellpadding="0" cellspacing="0" class="table table-striped">
 				<thead>
 					<tr>
 						<th><?php echo $this->Paginator->sort('name'); ?></th>
 						<th><?php echo $this->Paginator->sort('institution'); ?></th>
-						<th><?php echo $this->Paginator->sort('country'); ?></th>
+						<!--th><?php echo $this->Paginator->sort('country'); ?></th>
 						<th><?php echo $this->Paginator->sort('address'); ?></th>
 						<th><?php echo $this->Paginator->sort('room_id'); ?></th>
 						<th><?php echo $this->Paginator->sort('beds'); ?></th>
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
-						<th><?php echo $this->Paginator->sort('end'); ?></th>
+						<th><?php echo $this->Paginator->sort('end'); ?></th-->
 						<th><?php echo $this->Paginator->sort('email'); ?></th>
-						<th><?php echo $this->Paginator->sort('fellow_email', 'Fellow'); ?></th>
-						<th class="r">Room</th>
-						<th class="r">Lunches</th>
+						<!--th><?php echo $this->Paginator->sort('fellow_email', 'Fellow'); ?></th-->
+						<!--th class="r">Room</th>
+						<th class="r">Lunches</th-->
 						<th class="r">Total</th>
 						<th>Payment</th>
 						<th class="actions"></th>
@@ -45,7 +48,7 @@
 					<tr>
 						<td><?php echo h($booking['Booking']['name']); ?></td>
 						<td><?php echo h($booking['Booking']['institution']); ?></td>
-						<td><?php echo h($booking['Booking']['country']); ?></td>
+						<!--td><?php echo h($booking['Booking']['country']); ?></td>
 						<td><?php echo h($booking['Booking']['address']); ?></td>
 						<td>
 							<?php
@@ -54,22 +57,22 @@
 								$url = array('controller' => 'bookings', 'action' => 'edit', $booking['Booking']['id']);
 								echo @$this->Html->link($title, $url);
 							?>
-						</td>
+						</td-->
 						<!--td>
 							<?php echo $this->Html->link($booking['PriceType']['name'], array('controller' => 'price_types', 'action' => 'view', $booking['PriceType']['id'])); ?>
 						</td-->
-						<td class="c">
+						<!--td class="c">
 							<?php if (isset($booking['Room']['id'])) { echo h($booking['Booking']['beds']); } ?>
 						</td>
 						<td><?php echo $this->Time->format($booking['Booking']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
-						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
+						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td-->
 						<td><?php echo h($booking['Booking']['email']); ?></td>
-						<td><?php echo h($booking['Booking']['fellow_email']); ?></td>
+						<!--td><?php echo h($booking['Booking']['fellow_email']); ?></td-->
 						<?php
 							$price = $this->Booking->get_price($booking, $per_partes=true);
 						?>
-						<td class="r"><?php echo h($price['accomodation']); ?></td>
-						<td class="r"><?php echo h($price['meals']); ?></td>
+						<!--td class="r"><?php echo h($price['accomodation']); ?></td>
+						<td class="r"><?php echo h($price['meals']); ?></td-->
 						<td style="text-align:right"><?php echo h($booking['Booking']['web_price']); ?>&nbsp;Kč</td>
 						<td style="font-size:11px"><?php
 							$statuses = Hash::extract($booking['Payment'], '{n}.status');
@@ -104,11 +107,5 @@
 
 		</div> <!-- end col md 12 -->
 	</div><!-- end row -->
-
-	<div class="row">
-		<div class="col-md-3">
-			<?php echo $this->element('admin_navigation'); ?>
-		</div><!-- end col md 3 -->
-	</div>
 
 </div>

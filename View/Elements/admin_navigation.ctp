@@ -6,9 +6,11 @@
 		//'Rooms' => '/admin/rooms',
 		//'Prices' => '/admin/prices',
 		'Bookings' => '/admin/bookings',
+		'Items' => '/admin/reg_items',
+		'Types' => '/admin/reg_types',
 		'Survey' => '/admin/queries',
 		//'Meals' => '/admin/meals',
-		'Prices' => '/admin/reg_types',
+
 	);
 ?>
 <div class="actions">

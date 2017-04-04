@@ -21,13 +21,13 @@ function getAppState() {
 		selected_beds: RoomStore.getSelectedBeds(),
 		nights_count: RoomStore.getNightsCount(),
 		selected_upsells: RoomStore.get_selected_upsells(),
+
 		selected_reg_types: RoomStore.get_selected_reg_types(),
-		suitable_reg_types: 'member student early'.split(' '),
+		suitable_reg_types: RoomStore.get_suitable_reg_types(),
+
 		selected_reg_items: RoomStore.get_selected_reg_items(),
-		suitable_reg_items: {
-			eamt: 'Main Conference (May 29-31)',
-			workshop: ' Workshop Social Media and User Generated Content Machine Translation (May 31)'
-		},
+		suitable_reg_items: RoomStore.get_suitable_reg_items(),
+
 		late_reg_start: RoomStore.get_late_reg_start(),
 		selected_meals: RoomStore.get_selected_meals(),
 		selected_queries: RoomStore.get_selected_queries(),
@@ -54,12 +54,12 @@ var Booking = React.createClass({
 		this.setState(getAppState());
 	},
 	selectRegType: function (e) {
-		var id = e.target.value;
-		BookingActions.selectRegType(id);
+		var key = e.target.dataset.key;
+		BookingActions.selectRegType(key);
 	},
 	selectRegItem: function (e) {
-		var id = e.target.value;
-		BookingActions.selectRegItem(id);
+		var key = e.target.dataset.key;
+		BookingActions.selectRegItem(key);
 	},
 	selectRoom: function (room_id) {
 		BookingActions.selectRoom(room_id);
@@ -169,34 +169,34 @@ var Booking = React.createClass({
 		var selected_reg_items = this.state.selected_reg_items;
 		var reg_items = [];
 		for (var key in this.state.suitable_reg_items) {
-			var reg_item = this.state.suitable_reg_items[key];
-			var checked = (key in selected_reg_items);
-			var dom_id = 'RegItem' + key.capitalize();
+			var reg_item = this.state.suitable_reg_items[key].RegItem;
+			var checked = (reg_item.key in selected_reg_items);
+			var dom_id = 'RegItem' + reg_item.key.capitalize();
 			var input =
 				<div className="checkbox" key={key}>
 					<label htmlFor={dom_id} className="">
-						<input checked={checked} onChange={this.selectRegItem} type="checkbox" name={`data[${key.capitalize()}]`} value={key} id={dom_id}/>
-						<div className="name">{reg_item}</div>
+						<input checked={checked} onChange={this.selectRegItem} type="checkbox" name={`data[RegItem][RegItem][]`} value={reg_item.id} id={dom_id} data-key={reg_item.key}/>
+						<div className="name">{reg_item.desc}</div>
 					</label>
 				</div>;
 				reg_items.push(input);
 		}
 
-		// Price type
+		// Reg types
 		var selected_reg_types = this.state.selected_reg_types;
 		var reg_types = [];
 		for (var key in this.state.suitable_reg_types) {
-			var reg_type = this.state.suitable_reg_types[key];
-			var checked = (reg_type in selected_reg_types);
-			var dom_id = 'RegType' + reg_type.capitalize();
+			var reg_type = this.state.suitable_reg_types[key].RegType;
+			var checked = (reg_type.key in selected_reg_types);
+			var dom_id = 'RegType' + reg_type.key.capitalize();
 			var input =
 				<div className="checkbox" key={key}>
 					<label htmlFor={dom_id} className="">
-						<input checked={checked} onChange={this.selectRegType} type="checkbox" name={`data[${reg_type.capitalize()}]`} value={reg_type} id={dom_id}/>
-						<div className="name">{reg_type.capitalize()}</div>
+						<input checked={checked} onChange={this.selectRegType} type="checkbox" name={`data[RegType][RegType][]`} value={reg_type.id} id={dom_id} data-key={reg_type.key}/>
+						<div className="name">{reg_type.desc}</div>
 					</label>
 				</div>;
-			if (reg_type != 'early') reg_types.push(input);
+			if (reg_type.key != 'early') reg_types.push(input);
 		}
 
 		// Rooms

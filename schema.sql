@@ -246,4 +246,54 @@ INSERT INTO `users` (`id`, `username`, `password`, `mail`, `created`, `modified`
 (1,	'admin',	'$2a$10$5e1m7701PFCfJCeb7iHVAOWA.GEVrJb8q1CN4TPwtj8/MVj6qeBl6',	NULL,	'2015-06-02 23:46:07',	'2015-06-02 23:46:07'),
 (2,	'obo',	'$2a$10$QlIWBa0jMRJbhDnuWN/v5epHcxTzlV.Lf9247yRnmEoN5DkPqgXFu',	NULL,	'2015-06-03 22:18:18',	'2015-06-03 22:18:18');
 
+DROP TABLE IF EXISTS `bookings_reg_types`;
+DROP TABLE IF EXISTS `reg_types`;
+CREATE TABLE `reg_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) UNIQUE COLLATE utf8_czech_ci NOT NULL,
+  `desc` text COLLATE utf8_czech_ci NOT NULL,
+  `ord` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+CREATE TABLE `bookings_reg_types` (
+  `booking_id` int(11) NOT NULL,
+  `reg_type_id` int(11) NOT NULL,
+  KEY `booking_id` (`booking_id`),
+  KEY `reg_type_id` (`reg_type_id`),
+  CONSTRAINT `bookings_reg_types_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `bookings_reg_types_ibfk_2` FOREIGN KEY (`reg_type_id`) REFERENCES `reg_types` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `reg_types` (`id`, `key`, `desc`, `ord`) VALUES
+(1,	'member',	'Member',	0),
+(2,	'student',	'Student',	1),
+(3,	'early',	'Early',	2);
+
+DROP TABLE IF EXISTS `bookings_reg_items`;
+DROP TABLE IF EXISTS `reg_items`;
+CREATE TABLE `reg_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) UNIQUE COLLATE utf8_czech_ci NOT NULL,
+  `desc` text COLLATE utf8_czech_ci NOT NULL,
+  `ord` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+DROP TABLE IF EXISTS `bookings_reg_items`;
+CREATE TABLE `bookings_reg_items` (
+  `booking_id` int(11) NOT NULL,
+  `reg_item_id` int(11) NOT NULL,
+  KEY `booking_id` (`booking_id`),
+  KEY `reg_item_id` (`reg_item_id`),
+  CONSTRAINT `bookings_reg_items_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `bookings_reg_items_ibfk_2` FOREIGN KEY (`reg_item_id`) REFERENCES `reg_items` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `reg_items` (`id`, `key`, `desc`, `ord`) VALUES
+(1,	'eamt',	'Main Conference (May 29-31)',	1),
+(2,	'workshop',	'Workshop Social Media and User Generated Content Machine Translation (May 31)',	2);
+
+
+
 -- 2015-06-24 22:19:06

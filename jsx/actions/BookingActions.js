@@ -30,10 +30,22 @@ var BookingActions = {
 			data: queries
 		});
 	},
+	receiveRegPrices: function(reg_prices) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.RECEIVE_REG_PRICES,
+			data: reg_prices
+		});
+	},
 	receiveRegTypes: function(reg_types) {
 		AppDispatcher.dispatch({
 			actionType: BookingConstants.RECEIVE_REG_TYPES,
 			data: reg_types
+		});
+	},
+	receiveRegItems: function(reg_items) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.RECEIVE_REG_ITEMS,
+			data: reg_items
 		});
 	},
 	receiveLateRegStart: function(late_reg_start) {

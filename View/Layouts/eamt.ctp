@@ -66,7 +66,8 @@
 ?>
 <?php
 	if ($this->request->params['controller'] == 'bookings' &&  $this->request->params['action'] == 'admin_index') {
-		$container_class = "container-fluid";
+		//$container_class = "container-fluid";
+		$container_class = "container";
 	} else {
 		$container_class = "container";
 	}
