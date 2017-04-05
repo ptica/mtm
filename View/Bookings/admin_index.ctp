@@ -35,6 +35,8 @@
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
 						<th><?php echo $this->Paginator->sort('end'); ?></th-->
 						<th><?php echo $this->Paginator->sort('email'); ?></th>
+						<th>Items</th>
+						<th>Types</th>
 						<!--th><?php echo $this->Paginator->sort('fellow_email', 'Fellow'); ?></th-->
 						<!--th class="r">Room</th>
 						<th class="r">Lunches</th-->
@@ -67,6 +69,18 @@
 						<td><?php echo $this->Time->format($booking['Booking']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td-->
 						<td><?php echo h($booking['Booking']['email']); ?></td>
+						<td>
+							<?php
+								$codes = implode(', ', Hash::extract($booking['RegItem'], '{n}.key'));
+								echo $codes;
+							?>
+						</td>
+						<td>
+							<?php
+								$codes = implode(', ', Hash::extract($booking['RegType'], '{n}.key'));
+								echo $codes;
+							?>
+						</td>
 						<!--td><?php echo h($booking['Booking']['fellow_email']); ?></td-->
 						<?php
 							$price = $this->Booking->get_price($booking, $per_partes=true);
