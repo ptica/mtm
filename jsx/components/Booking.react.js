@@ -101,7 +101,7 @@ var Booking = React.createClass({
 			eamt: Object.keys(this.state.selected_reg_types).sort().join('-'),
 			workshop: this.state.selected_reg_types['student'] ? 'student' : ''
 		};
-		for (item in this.state.selected_reg_items) {
+		for (var item in this.state.selected_reg_items) {
 			var key = keys[item];
 			if (price_defs[item][key]) {
 				prices[item] = Number(price_defs[item][key][currency]);

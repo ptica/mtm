@@ -34,8 +34,8 @@ var _late_reg_start = moment('1.1.1970', 'D.M.YYYY');
 function receive_late_reg_start(late_reg_start) {
 	// Have just received data from the server API.
 	_late_reg_start = late_reg_start;
-	now = moment();
-	start = moment(late_reg_start);
+	var now = moment();
+	var start = moment(late_reg_start);
 	if (now <= start) {
 		// update selected_reg_types
 		set_selected_reg_type('early');
