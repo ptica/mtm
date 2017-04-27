@@ -21,13 +21,13 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 					<thead>
 						<tr>
-							<th>ORDERNUMBER</th>
+							<th>ID</th>
 							<th><?php echo $this->Paginator->sort('name'); ?></th>
-							<th><?php echo $this->Paginator->sort('room_id'); ?></th>
-							<th><?php echo $this->Paginator->sort('start', 'Date'); ?></th>
+							<th><?php echo $this->Paginator->sort('address'); ?></th>
+							<th style="min-width:115px;"><?php echo $this->Paginator->sort('start', 'Date'); ?></th>
 							<th><?php echo $this->Paginator->sort('email'); ?></th>
-							<th class="r">Room + Addons</th>
-							<th class="r">Lunches</th>
+							<!--th class="r">Room + Addons</th-->
+							<!--th class="r">Lunches</th-->
 							<th class="r">Total</th>
 						</tr>
 					</thead>
@@ -36,7 +36,7 @@
 						<tr>
 							<td><?php $payment = end($booking['Payment']); echo $payment['id']; ?></td>
 							<td><?php echo h($booking['Booking']['name']); ?></td>
-							<td>
+							<!--td>
 								<?php
 									$title = '-';
 									if (isset($booking['Room']['name'])) {
@@ -47,14 +47,15 @@
 									$url = array('controller' => 'bookings', 'action' => 'edit', $booking['Booking']['id']);
 									echo @$this->Html->link($title, $url);
 								?>
-							</td>
-							<td><?php echo $booking['Booking']['date_txt']; ?></td>
+							</td-->
+							<td><?php echo $booking['Booking']['institution'] . '<br>'. $booking['Booking']['address']; ?></td>
+							<td><?php echo $booking['Booking']['created']; ?></td>
 							<td><?php echo h($booking['Booking']['email']); ?></td>
 							<?php
 								$price = $this->Booking->get_price($booking, $per_partes=true);
 							?>
-							<td class="r"><?php echo h($price['accomodation']); ?></td>
-							<td class="r"><?php echo h($price['meals']); ?></td>
+							<!--td class="r"><?php echo h($price['accomodation']); ?></td-->
+							<!--td class="r"><?php echo h($price['meals']); ?></td-->
 							<td class="r"><?php echo h($booking['Booking']['web_price']); ?></td>
 						</tr>
 					<?php } ?>

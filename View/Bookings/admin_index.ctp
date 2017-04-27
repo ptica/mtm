@@ -41,7 +41,7 @@
 						<!--th class="r">Room</th>
 						<th class="r">Lunches</th-->
 						<th class="r">Total</th>
-						<th>Payment</th>
+						<th style="min-width: 175px;">Payment</th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -68,7 +68,7 @@
 						</td>
 						<td><?php echo $this->Time->format($booking['Booking']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td-->
-						<td><?php echo h($booking['Booking']['email']); ?></td>
+						<td style="font-size:11px"><?php echo h($booking['Booking']['email']); ?></td>
 						<td>
 							<?php
 								$codes = implode(', ', Hash::extract($booking['RegItem'], '{n}.key'));
@@ -89,8 +89,10 @@
 						<td class="r"><?php echo h($price['meals']); ?></td-->
 						<td style="text-align:right"><?php echo h($booking['Booking']['web_price']); ?>&nbsp;Kč</td>
 						<td style="font-size:11px"><?php
-							$statuses = Hash::extract($booking['Payment'], '{n}.status');
-							$status = implode(' | ', $statuses);
+							//$statuses = Hash::extract($booking['Payment'], '{n}.status');
+							//$statuses = Hash::extract($booking['Payment'], ['(%s): %s', '{n}.id', '{n}.status']);
+							$statuses = Hash::format($booking['Payment'], ['{n}.id', '{n}.status'], '%1$d: %2$s');
+							$status = implode('<br>', $statuses);
 							echo $status;
 						?></td>
 						<td class="actions">
