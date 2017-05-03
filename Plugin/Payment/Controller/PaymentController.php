@@ -165,7 +165,7 @@ class PaymentController extends PaymentAppController {
 
 			// Display response to user
 			if ($pr_code == 0 && $sr_code == 0) {
-				// $this->send_new_payment($payment_id);
+				$this->send_new_payment($payment_id);
 				$this->redirect('/pay/ok/' . $payment['Payment']['token']);
 			} else {
 				$this->redirect('/pay/nok/' . $payment['Payment']['token']);
@@ -211,6 +211,12 @@ class PaymentController extends PaymentAppController {
 			echo 'Payment not found.';
 			exit();
 		}
+
+		//
+		if (isset($_GET['receipt'])) {
+			$payment = $this->Payment->find('first', array('conditions'=>['Payment.token'=>$token]));
+			$this->send_new_payment($payment['Payment']['id']);
+		}
 	}
 
 	/**
@@ -219,13 +225,13 @@ class PaymentController extends PaymentAppController {
 	private function send_new_payment($payment_id) {
 		$this->Payment->recursive = 2;
 		$payment = $this->Payment->findById($payment_id);
+		$viewVars = $payment;
 
-		$viewVars = $this->get_receipt_data($payment);
 		// amend for the email
 		$this->set_request_scheme();
 		$host = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
 		$token = $payment['Payment']['token'];
-		$viewVars['view_on_server_url'] = "$host/payment/ok?Ref=$payment_id&token=$token";
+		//$viewVars['view_on_server_url'] = "$host/payment/ok?Ref=$payment_id&token=$token";
 		$viewVars['logo'] = 'cid:logo'; // reference to attached logo
 
 		$attachments = array(
@@ -236,11 +242,12 @@ class PaymentController extends PaymentAppController {
 			)
 		);
 
-		$subject = 'Your receipt';
+		$subject = 'Your EAMT 2017 receipt';
 		$to = $payment['Booking']['email'];
 
-		$Email = new CakeEmail('mandrill');
-		$Email->template('client_booking', $layout='mailchimp')
+		$Email = new CakeEmail('default');
+		$Email->template('client_receipt')
+			->emailFormat('html')
 			->to($to)
 			->subject($subject)
 			->viewVars($viewVars)
