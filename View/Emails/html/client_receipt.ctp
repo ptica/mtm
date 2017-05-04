@@ -9,17 +9,38 @@
     Dear <?= $Booking['name'] ?>.
 </p>
 
-<p>We hereby confirm your <?= $reg_type ?> registration for:</p>
-<ul>
-    <?php
-        foreach ($Booking['RegItem'] as $item) {
-            echo '<li>' . $item['desc'] . '</li>';
-        }
-    ?>
-    <li>for a total of CZK <?= $total ?>
-    </li>
-</ul>
+<p>We hereby confirm your <?= $reg_type ?> registration and payment for:</p>
 
+<table>
+    <tr>
+        <td>
+            <ul>
+                <?php
+                    foreach ($Booking['RegItem'] as $item) {
+                        echo '<li>' . $item['desc'] . '</li>';
+                    }
+                ?>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:left">
+            for a total of CZK <?= $Payment['amountcents']/100 ?><br>
+            payment was accepted on <?= $Payment['created'] ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Registered participant:
+            <ul>
+                <li><?= $Booking['name'] ?></li>
+                <li><?= $Booking['institution'] ?></li>
+                <li><?= $Booking['address'] ?></li>
+            </ul>
+        </td>
+    </tr>
+</table>
 
 
 <p>Thank you for your payment.</p>
