@@ -91,6 +91,10 @@ var Booking = React.createClass({
 		BookingActions.setDates(start, end);
 	},
 	get_registration_price: function (currency='czk') {
+		if (location.search.substr(1).split('&').indexOf('fees=zero') !== -1) {
+			return 0;
+		}
+
 		var prices = {
 			eamt: 0,
 			workshop: 0
