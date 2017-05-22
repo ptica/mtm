@@ -95,7 +95,10 @@
 							$is_late  = array_search($total, $late_set);
 						?>
 						<td style="text-align:right">
-							<?php echo h($booking['Booking']['web_price']); ?>&nbsp;Kč
+							<?php
+								$booking_id = $booking['Booking']['id'];
+								$token      = $booking['Booking']['token'];
+								echo $this->Html->link($booking['Booking']['web_price'], "/pay/$booking_id/$token"); ?>&nbsp;Kč
 							<div style="font-size:10px">
 							<?php
 								echo $is_early ? 'early' : '';
@@ -114,6 +117,7 @@
 							$statuses = Hash::format($booking['Payment'], ['{n}.id', '{n}.status'], '%1$d: %2$s');
 							$status = implode('<br>', $statuses);
 							echo $status;
+							if ($booking['Booking']['id'] == 111) echo 'free ticket for memsource - 50% paid via Andrea Belvedere';
 						?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $booking['Booking']['id']), array('escape' => false)); ?>
