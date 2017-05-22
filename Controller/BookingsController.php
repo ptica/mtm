@@ -9,6 +9,7 @@ class BookingsController extends AppController {
 
 	public $paginate = array(
 		'limit' => 75,
+		'order' => 'Booking.id'
 	);
 
 	// declare public actions
