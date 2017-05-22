@@ -87,7 +87,27 @@
 						?>
 						<!--td class="r"><?php echo h($price['accomodation']); ?></td>
 						<td class="r"><?php echo h($price['meals']); ?></td-->
-						<td style="text-align:right"><?php echo h($booking['Booking']['web_price']); ?>&nbsp;Kč</td>
+						<?php
+							$early_set = explode(' ', "4725 5265 5805 6210 6750 7290 5670 6210 6750 7830 8370 8910");
+							$late_set  = explode(' ', "5940 6480 7020 8100 8640 9180 6615 7155 7695 9720 10260 10800");
+							$total = (int) floor($booking['Booking']['web_price']);
+							$is_early = array_search($total, $early_set);
+							$is_late  = array_search($total, $late_set);
+						?>
+						<td style="text-align:right">
+							<?php echo h($booking['Booking']['web_price']); ?>&nbsp;Kč
+							<div style="font-size:10px">
+							<?php
+								echo $is_early ? 'early' : '';
+								echo $is_late ? 'late' : '';
+								if ($is_late && $booking['Booking']['id'] >= 36 && $booking['Booking']['id'] <= 39) {
+									$early_price = $early_set[$is_late];
+									$diff = $total - $early_price;
+									echo "<br>$total - $early_price = $diff";
+								}
+							?>
+							</div>
+						</td>
 						<td style="font-size:11px"><?php
 							//$statuses = Hash::extract($booking['Payment'], '{n}.status');
 							//$statuses = Hash::extract($booking['Payment'], ['(%s): %s', '{n}.id', '{n}.status']);
