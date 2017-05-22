@@ -91,8 +91,8 @@
 							$early_set = explode(' ', "4725 5265 5805 6210 6750 7290 5670 6210 6750 7830 8370 8910");
 							$late_set  = explode(' ', "5940 6480 7020 8100 8640 9180 6615 7155 7695 9720 10260 10800");
 							$total = (int) floor($booking['Booking']['web_price']);
-							$is_early = array_search($total, $early_set);
-							$is_late  = array_search($total, $late_set);
+							$is_early = array_search($total, $early_set) !== false;
+							$is_late  = array_search($total, $late_set) !== false;
 						?>
 						<td style="text-align:right">
 							<?php
