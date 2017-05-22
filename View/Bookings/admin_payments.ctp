@@ -2,6 +2,12 @@
 	//debug($bookings);
 	App::import('Model', 'Booking');
 	$this->Booking = new Booking();
+
+	$reg_types_1 = file_get_contents(APP . 'Config/price-eamt.json');
+	$reg_types_2 = file_get_contents(APP . 'Config/price-workshop.json');
+
+	$reg_types_1 = json_decode($reg_types_1, $assoc = TRUE);
+	$reg_types_2 = json_decode($reg_types_2, $assoc = TRUE);
 ?>
 <div class="bookings index">
 	<div class="row">
@@ -28,6 +34,8 @@
 							<th><?php echo $this->Paginator->sort('email'); ?></th>
 							<!--th class="r">Room + Addons</th-->
 							<!--th class="r">Lunches</th-->
+							<th class="r">Workshop</th>
+							<th class="r">EAMT</th>
 							<th class="r">Total</th>
 						</tr>
 					</thead>
@@ -56,6 +64,25 @@
 							?>
 							<!--td class="r"><?php echo h($price['accomodation']); ?></td-->
 							<!--td class="r"><?php echo h($price['meals']); ?></td-->
+							<?php
+								$early_set = explode(' ', "4725 5265 5805 6210 6750 7290 5670 6210 6750 7830 8370 8910");
+								$late_set  = explode(' ', "5940 6480 7020 8100 8640 9180 6615 7155 7695 9720 10260 10800");
+								$total = (int) floor($booking['Booking']['web_price']);
+								$is_early = array_search($total, $early_set);
+								$is_late  = array_search($total, $late_set);
+
+								$codes = implode(', ', Hash::extract($booking['RegItem'], '{n}.key'));
+								if ($is_early) {
+									array_push($codes, 'early');
+								}
+								array_sort($codes);
+								$key = implode('-', $codes);
+
+								$workshop_price = $reg_types_2[$key]['czk'];
+								$eamt_price     = $reg_types_1[$key]['czk'];
+							?>
+							<td class="r"><?= $workshop_price ?></td>
+							<td class="r"><?= $eamt_price ?></td>
 							<td class="r"><?php echo h($booking['Booking']['web_price']); ?></td>
 						</tr>
 					<?php } ?>
