@@ -8,6 +8,12 @@
 
 	$reg_types_1 = json_decode($reg_types_1, $assoc = TRUE);
 	$reg_types_2 = json_decode($reg_types_2, $assoc = TRUE);
+
+	$total = [
+		'workshop' => 0,
+		'eamt' => 0,
+		'grand' => 0,
+	]
 ?>
 <div class="bookings index">
 	<div class="row">
@@ -67,25 +73,47 @@
 							<?php
 								$early_set = explode(' ', "4725 5265 5805 6210 6750 7290 5670 6210 6750 7830 8370 8910");
 								$late_set  = explode(' ', "5940 6480 7020 8100 8640 9180 6615 7155 7695 9720 10260 10800");
-								$total = (int) floor($booking['Booking']['web_price']);
-								$is_early = array_search($total, $early_set);
-								$is_late  = array_search($total, $late_set);
+								$web_price = (int) floor($booking['Booking']['web_price']);
+								$is_early = array_search($web_price, $early_set) !== false;
+								$is_late  = array_search($web_price, $late_set)  !== false;
 
-								$codes = implode(', ', Hash::extract($booking['RegItem'], '{n}.key'));
+								$codes = Hash::extract($booking['RegType'], '{n}.key');
+								$items = Hash::extract($booking['RegItem'], '{n}.key');
 								if ($is_early) {
 									array_push($codes, 'early');
 								}
-								array_sort($codes);
-								$key = implode('-', $codes);
+								sort($codes);
 
-								$workshop_price = $reg_types_2[$key]['czk'];
-								$eamt_price     = $reg_types_1[$key]['czk'];
+								if (array_search('eamt', $items) !== false) {
+									$key1 = implode('-', $codes);
+									$eamt_price = $reg_types_1[$key1]['czk'];
+								} else {
+									$eamt_price = 0;
+								}
+
+								if (array_search('workshop', $items) !== false) {
+									$key2 = array_search('student', $codes) ? 'student' : '';
+									$workshop_price = $reg_types_2[$key2]['czk'];
+								} else {
+									$workshop_price = 0;
+								}
+
+								$total['workshop'] += $workshop_price;
+								$total['eamt']     += $eamt_price;
+								$total['grand']    += $booking['Booking']['web_price'];
+								
 							?>
 							<td class="r"><?= $workshop_price ?></td>
 							<td class="r"><?= $eamt_price ?></td>
 							<td class="r"><?php echo h($booking['Booking']['web_price']); ?></td>
 						</tr>
 					<?php } ?>
+						<tr>
+							<td colspan="5"><b>Total</b>
+							<td class="r"><?= $total['workshop'] ?>
+							<td class="r"><?= $total['eamt'] ?>
+							<td class="r"><?= $total['grand'] ?>
+						</tr>
 					</tbody>
 				</table>
 			</form>
