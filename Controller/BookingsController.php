@@ -8,7 +8,8 @@ class BookingsController extends AppController {
 	public $components = array('Paginator', 'Session');
 
 	public $paginate = array(
-		'limit' => 75,
+		'limit' => 150,
+		'maxLimit' => 200,
 		'order' => 'Booking.id'
 	);
 
@@ -136,7 +137,8 @@ class BookingsController extends AppController {
 		);
 		$this->Paginator->settings = array(
 			'limit' => 75,
-			'joins' => $joins
+			'joins' => $joins,
+			'order' => 'Payment.id'
 		);
 		$this->set('bookings', $this->Paginator->paginate());
 		//$this->set('bookings', $this->Booking->find('all', array('joins'=>$joins)));
