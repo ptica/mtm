@@ -13,7 +13,12 @@
 		'workshop' => 0,
 		'eamt' => 0,
 		'grand' => 0,
-	]
+	];
+	$counts = [
+		'workshop' => 0,
+		'eamt_early' => 0,
+		'eamt_late' => 0,
+	];
 ?>
 <div class="bookings index">
 	<div class="row">
@@ -101,10 +106,16 @@
 								$total['workshop'] += $workshop_price;
 								$total['eamt']     += $eamt_price;
 								$total['grand']    += $booking['Booking']['web_price'];
+
+								if ($workshop_price > 0) $counts['workshop']++;
+								if ($eamt_price > 0)     $is_early ? $counts['eamt_early']++ : $counts['eamt_late']++;
 								
 							?>
 							<td class="r"><?= $workshop_price ?></td>
-							<td class="r"><?= $eamt_price ?></td>
+							<td class="r"><?= $eamt_price ?>
+								<?php if ($eamt_price > 0) { ?>
+									<div style="font-size:10px"><?= $is_early ? 'early' : 'late' ?></div></td>
+								<?php } ?>
 							<td class="r"><?php echo h($booking['Booking']['web_price']); ?></td>
 						</tr>
 					<?php } ?>
@@ -113,6 +124,15 @@
 							<td class="r"><?= $total['workshop'] ?>
 							<td class="r"><?= $total['eamt'] ?>
 							<td class="r"><?= $total['grand'] ?>
+						</tr>
+						<tr>
+							<td colspan="5"><b>Counts</b>
+							<td class="r" style="font-size:10px">
+								<?= $counts['workshop'] ?>x
+							<td class="c" style="font-size:10px">
+								<?= $counts['eamt_early'] ?>x early<br>
+								<?= $counts['eamt_late'] ?>x late<br>
+							<td class="r">
 						</tr>
 					</tbody>
 				</table>
