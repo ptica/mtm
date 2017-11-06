@@ -59,7 +59,7 @@ class AppController extends Controller {
 		) {
 			Configure::write('Routing.admin', true);
 		}
-		$this->layout = 'eamt';
+		$this->layout = 'tlt';
 	}
 
 	protected function set_request_scheme() {

@@ -20,12 +20,15 @@
 		</div><!-- end col md 3 -->
 		<div class="col-md-9">
 			<?php echo $this->Form->create('RegType', array('role'=>'form', 'class'=>'form-horizontal')); ?>
-
+				<?php echo $this->Form->hidden('id'); ?>
 				<div class="form-group">
 					<?php echo $this->Form->input('key', array('class'=>'form-control', 'placeholder'=>__('Key')));?>
 				</div>
 				<div class="form-group">
 					<?php echo $this->Form->input('desc', array('data-provide'=>'wysiwyg', 'class'=>'form-control', 'placeholder'=>__('Desc')));?>
+				</div>
+				<div class="form-group">
+					<?php echo $this->Form->input('enabled', array('class'=>'form-control', 'placeholder'=>__('Enabled')));?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">

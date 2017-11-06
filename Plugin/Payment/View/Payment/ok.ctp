@@ -21,6 +21,6 @@
 	</p>
 
 	<p>
-	    Take care, the EAMT 2017 team.
+	    Take care, the TLT 16 team.
 	</p>
 </div>

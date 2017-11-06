@@ -44,7 +44,7 @@
 
 
 <p>Thank you for your payment.</p>
-<p>The EAMT 2017 team.</p>
+<p>The TLT 16 team.</p>
 
 <p>
     <img src="<?php echo $logo; ?>">

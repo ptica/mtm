@@ -20,7 +20,7 @@
 		</div><!-- end col md 3 -->
 		<div class="col-md-9">
 			<?php echo $this->Form->create('RegItem', array('role'=>'form', 'class'=>'form-horizontal')); ?>
-
+				<?php echo $this->Form->hidden('id'); ?>
 				<div class="form-group">
 					<?php echo $this->Form->input('key', array('class'=>'form-control', 'placeholder'=>__('Key')));?>
 				</div>

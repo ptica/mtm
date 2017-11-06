@@ -96,13 +96,13 @@ var Booking = React.createClass({
 		}
 
 		var prices = {
-			eamt: 0,
+			tlt: 0,
 			workshop: 0
 		};
 		var price_workshop = 0;
 		var price_defs = this.state.reg_type_prices;
 		var keys = {
-			eamt: Object.keys(this.state.selected_reg_types).sort().join('-'),
+			tlt: Object.keys(this.state.selected_reg_types).sort().join('-'),
 			workshop: this.state.selected_reg_types['student'] ? 'student' : ''
 		};
 		for (var item in this.state.selected_reg_items) {
@@ -340,13 +340,13 @@ var Booking = React.createClass({
 						<div className="form-group">
 							<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
 							<div className="col-sm-8 input-group">
-								<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of EAMT you plan to attend:</p>
+								<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of TLT you plan to attend:</p>
 							</div>
 						</div>
 					}
 					{queries.length > 0 &&
 						<div className="form-group">
-							<label htmlFor="QueryQuery" className="col-sm-2 control-label">EAMT Content</label>
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label">TLT Content</label>
 							<div className="col-sm-8 input-group">
 								<input type="hidden" name="data[Query][Query]" defaultValue id="QueryQuery" />
 								{queries}
@@ -362,16 +362,16 @@ var Booking = React.createClass({
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingInstitution" className="col-sm-2 control-label">Institution</label>
+						<label htmlFor="BookingEmail" className="col-sm-2 control-label">Email</label>
 						<div className="col-sm-8 input-group">
-							<input ref="lastname" name="data[Booking][institution]" className="form-control" placeholder="(to appear on the badge)" maxLength="255" type="text" id="BookingInstitution" required="required"/>
+							<input ref="email" name="data[Booking][email]" className="form-control" placeholder="Email" maxLength="255" type="email" id="BookingEmail" required="required"/>
 						</div>
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingCountry" className="col-sm-2 control-label">Country</label>
+						<label htmlFor="BookingInstitution" className="col-sm-2 control-label">Affiliation</label>
 						<div className="col-sm-8 input-group">
-							<input ref="lastname" name="data[Booking][country]" className="form-control" placeholder="Country" maxLength="255" type="text" id="BookingCountry" required="required"/>
+							<input ref="lastname" name="data[Booking][institution]" className="form-control" placeholder="(to appear on the badge)" maxLength="255" type="text" id="BookingInstitution" required="required"/>
 						</div>
 					</div>
 
@@ -379,16 +379,23 @@ var Booking = React.createClass({
 						<label htmlFor="BookingAddress" className="col-sm-2 control-label">Address</label>
 						<div className="col-sm-8 input-group">
 							<textarea name="data[Booking][address]" className="form-control" data-provide="wysiwyg" placeholder="Organization and address
-for your printed receipt:
-(only if you need a receipt)" cols="30" rows="6" id="BookingAddress">
+for your printed receipt
+" cols="30" rows="6" id="BookingAddress">
 							</textarea>
 						</div>
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingEmail" className="col-sm-2 control-label">Email</label>
+						<label htmlFor="BookingVAT" className="col-sm-2 control-label">VAT No.</label>
 						<div className="col-sm-8 input-group">
-							<input ref="email" name="data[Booking][email]" className="form-control" placeholder="Email" maxLength="255" type="email" id="BookingEmail" required="required"/>
+							<input ref="vat" name="data[Booking][vat]" className="form-control" placeholder="for bill" maxLength="255" type="text" id="BookingVAT" />
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="BookingCountry" className="col-sm-2 control-label">Country</label>
+						<div className="col-sm-8 input-group">
+							<input ref="lastname" name="data[Booking][country]" className="form-control" placeholder="Country" maxLength="255" type="text" id="BookingCountry" required="required"/>
 						</div>
 					</div>
 
@@ -489,7 +496,7 @@ for your printed receipt:
 						<div className="form-group">
 							<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
 							<div className="col-sm-8 input-group">
-								<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following EAMT days (Sept 12-Sept 17).</p>
+								<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following TLT days (Sept 12-Sept 17).</p>
 								<p className="form-control-static">The price is per lunch (includes soup, main dish, dessert and drink).</p>
 								<p className="form-control-static">Participants with these pre-paid lunches will have dedicated tables in the restaurant in the basement. You might be able to get a place (and meal, of course) without this booking, in which case you will be selecting from a daily menu and most importantly, you will have to sit at different tables.</p>
 							</div>

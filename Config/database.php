@@ -59,7 +59,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'eamt',
+		'database' => 'tlt',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);

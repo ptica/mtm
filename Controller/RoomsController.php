@@ -60,13 +60,14 @@ class RoomsController extends AppController {
 		$queries = $this->Query->find('all');
 		$queries = Hash::combine($queries, '{n}.Query.id', '{n}.Query');
 
-		$reg_types_1 = file_get_contents(APP . 'Config/price-eamt.json');
+		$reg_types_1 = file_get_contents(APP . 'Config/price-tlt.json');
 		$reg_types_2 = file_get_contents(APP . 'Config/price-workshop.json');
 
 		$late_reg_start = $this->Configuration->findByName('late_registration_start_date');
 
-		$suitable_reg_types = $this->RegType->find('all');
-		$suitable_reg_items = $this->RegItem->find('all');
+		$cnd = array( 'enabled' => 1 );
+		$suitable_reg_types = $this->RegType->find('all', array('conditions'=>$cnd));
+		$suitable_reg_items = $this->RegItem->find('all', array('conditions'=>$cnd));
 
 		$res = array(
 			'rooms' => $rooms,
@@ -74,7 +75,7 @@ class RoomsController extends AppController {
 			'meals' => $meals,
 			'queries' => $queries,
 			'reg_prices' => array(
-				'eamt'     => json_decode($reg_types_1, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
+				'tlt'      => json_decode($reg_types_1, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
 				'workshop' => json_decode($reg_types_2, $assoc = TRUE), # assoc true so empty key remains empty (php uses '_empty_' otherwise)
 			),
 			'suitable_reg_types' => $suitable_reg_types,

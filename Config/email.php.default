@@ -2,7 +2,7 @@
 class EmailConfig {
 	public $default = array(
 		'transport' => 'Smtp',
-		'from' => array('info@ufal.mff.cuni.cz' => 'EAMT 2017 Registration'),
+		'from' => array('info@ufal.mff.cuni.cz' => 'TLT 16 Registration'),
 		'host' => 'smtp.mailgun.org',
 		'port' => 587,
 		'timeout' => 30,
@@ -13,6 +13,6 @@ class EmailConfig {
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 		'tls' => true,
-		'subject' => 'EAMT 2017 Registration',
+		'subject' => 'TLT 16 Registration',
 	);
 }
