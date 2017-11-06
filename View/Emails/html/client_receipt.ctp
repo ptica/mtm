@@ -34,9 +34,10 @@
         <td>
             Registered participant:
             <ul>
-                <li><?= $Booking['name'] ?></li>
                 <li><?= $Booking['institution'] ?></li>
-                <li><?= $Booking['address'] ?></li>
+				<li><?= $Booking['address'] ?></li>
+				<li><?= $Booking['vat'] ?></li>
+				<li><?= $Booking['name'] ?></li>
             </ul>
         </td>
     </tr>
