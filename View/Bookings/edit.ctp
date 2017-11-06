@@ -32,20 +32,35 @@
 				</div>
 			    </div>
 			<?php echo $this->Form->create('Booking', array('role'=>'form', 'class'=>'form-horizontal')); ?>
+				<?php echo $this->Form->hidden('id'); ?>
 				<div class="form-group">
 					<?php echo $this->Form->input('name', array('label'=>'Your Name', 'class'=>'form-control', 'placeholder'=>__('Name')));?>
 				</div>
 
 				<div class="form-group">
-					<?php echo $this->Form->input('institution', array('class'=>'form-control', 'placeholder'=>__('Institution')));?>
+					<?php echo $this->Form->input('email', array('label'=>'Your email', 'class'=>'form-control', 'placeholder'=>__('Email')));?>
 				</div>
 
+				<?php if ($this->request->data['Booking']['fellow_email']) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('fellow_email', array('label'=>'Room Fellows', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					</div>
+				<?php } ?>
+
 				<div class="form-group">
-					<?php echo $this->Form->input('country', array('class'=>'form-control', 'placeholder'=>__('Country')));?>
+					<?php echo $this->Form->input('institution', array('class'=>'form-control', 'label'=>'Affiliation', 'placeholder'=>__('Affiliation')));?>
 				</div>
 
 				<div class="form-group">
 					<?php echo $this->Form->input('address', array('class'=>'form-control', 'placeholder'=>__('Address')));?>
+				</div>
+
+				<div class="form-group">
+					<?php echo $this->Form->input('vat', array('class'=>'form-control', 'label'=>'VAT No.', 'placeholder'=>__('for bill')));?>
+				</div>
+
+				<div class="form-group">
+					<?php echo $this->Form->input('country', array('class'=>'form-control', 'placeholder'=>__('Country')));?>
 				</div>
 
 				<div class="form-group">
@@ -114,16 +129,6 @@
 							'value' => $this->Time->format($this->data['Booking']['end'], '%-d.%-m.%Y'),
 							'disabled'=>'disabled'
 						));?>
-					</div>
-				<?php } ?>
-
-				<div class="form-group">
-					<?php echo $this->Form->input('email', array('label'=>'Your email', 'class'=>'form-control', 'placeholder'=>__('Email')));?>
-				</div>
-
-				<?php if ($this->request->data['Booking']['fellow_email']) { ?>
-					<div class="form-group">
-						<?php echo $this->Form->input('fellow_email', array('label'=>'Room Fellows', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
 					</div>
 				<?php } ?>
 
