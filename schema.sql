@@ -291,7 +291,7 @@ CREATE TABLE `bookings_reg_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `reg_items` (`id`, `key`, `desc`, `ord`) VALUES
-(1,	'eamt',	'Main Conference (May 29-31)',	1),
+(1,	'tlt',	'Main Conference (May 29-31)',	1),
 (2,	'workshop',	'Workshop Social Media and User Generated Content Machine Translation (May 31)',	2);
 
 

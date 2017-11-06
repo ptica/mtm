@@ -21,12 +21,12 @@ var _selected_queries = {};
 var _reg_types = {};
 var _reg_items = {};
 var _reg_prices = {
-	eamt: {},
+	tlt: {},
 	workshop: {}
 };
 var _selected_reg_types = {};
 var _selected_reg_items = {
-	'eamt': 'eamt',
+	'tlt': 'tlt',
 	'workshop': 'workshop'
 };
 var _late_reg_start = moment('1.1.1970', 'D.M.YYYY');

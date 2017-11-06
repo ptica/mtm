@@ -10,8 +10,8 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<!--a class="navbar-brand" href="<?php echo Router::url('/');?>">EAMT 2017</a-->
-				<a class="navbar-brand" href="https://ufal.mff.cuni.cz/eamt2017/">EAMT 2017</a>
+				<!--a class="navbar-brand" href="<?php echo Router::url('/');?>">TLT 16</a-->
+				<a class="navbar-brand" href="https://ufal.mff.cuni.cz/tlt16/">TLT 16</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">

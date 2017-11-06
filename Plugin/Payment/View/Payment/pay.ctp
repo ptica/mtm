@@ -1,5 +1,5 @@
 <div>
-	<h1>EAMT 2017 Registration Payment</h1>
+	<h1>TLT 16 Registration Payment</h1>
 
 	<div class="row" style="margin-top: 45px;">
 		<div class="col-md-9">

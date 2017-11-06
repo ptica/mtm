@@ -3,7 +3,7 @@
 	App::import('Model', 'Booking');
 	$this->Booking = new Booking();
 
-	$reg_types_1 = file_get_contents(APP . 'Config/price-eamt.json');
+	$reg_types_1 = file_get_contents(APP . 'Config/price-tlt.json');
 	$reg_types_2 = file_get_contents(APP . 'Config/price-workshop.json');
 
 	$reg_types_1 = json_decode($reg_types_1, $assoc = TRUE);
@@ -11,13 +11,13 @@
 
 	$total = [
 		'workshop' => 0,
-		'eamt' => 0,
+		'tlt' => 0,
 		'grand' => 0,
 	];
 	$counts = [
 		'workshop' => 0,
-		'eamt_early' => 0,
-		'eamt_late' => 0,
+		'tlt_early' => 0,
+		'tlt_late' => 0,
 	];
 ?>
 <div class="bookings index">
@@ -46,7 +46,7 @@
 							<!--th class="r">Room + Addons</th-->
 							<!--th class="r">Lunches</th-->
 							<th class="r">Workshop</th>
-							<th class="r">EAMT</th>
+							<th class="r">TLT 16</th>
 							<th class="r">Total</th>
 						</tr>
 					</thead>
@@ -89,11 +89,11 @@
 								}
 								sort($codes);
 
-								if (array_search('eamt', $items) !== false) {
+								if (array_search('tlt', $items) !== false) {
 									$key1 = implode('-', $codes);
-									$eamt_price = $reg_types_1[$key1]['czk'];
+									$tlt_price = $reg_types_1[$key1]['czk'];
 								} else {
-									$eamt_price = 0;
+									$tlt_price = 0;
 								}
 
 								if (array_search('workshop', $items) !== false) {
@@ -104,16 +104,16 @@
 								}
 
 								$total['workshop'] += $workshop_price;
-								$total['eamt']     += $eamt_price;
+								$total['tlt']      += $tlt_price;
 								$total['grand']    += $booking['Booking']['web_price'];
 
 								if ($workshop_price > 0) $counts['workshop']++;
-								if ($eamt_price > 0)     $is_early ? $counts['eamt_early']++ : $counts['eamt_late']++;
+								if ($tlt_price > 0)     $is_early ? $counts['tlt_early']++ : $counts['tlt_late']++;
 								
 							?>
 							<td class="r"><?= $workshop_price ?></td>
-							<td class="r"><?= $eamt_price ?>
-								<?php if ($eamt_price > 0) { ?>
+							<td class="r"><?= $tlt_price ?>
+								<?php if ($tlt_price > 0) { ?>
 									<div style="font-size:10px"><?= $is_early ? 'early' : 'late' ?></div></td>
 								<?php } ?>
 							<td class="r"><?php echo h($booking['Booking']['web_price']); ?></td>
@@ -122,7 +122,7 @@
 						<tr>
 							<td colspan="5"><b>Total</b>
 							<td class="r"><?= $total['workshop'] ?>
-							<td class="r"><?= $total['eamt'] ?>
+							<td class="r"><?= $total['tlt'] ?>
 							<td class="r"><?= $total['grand'] ?>
 						</tr>
 						<tr>
@@ -130,8 +130,8 @@
 							<td class="r" style="font-size:10px">
 								<?= $counts['workshop'] ?>x
 							<td class="c" style="font-size:10px">
-								<?= $counts['eamt_early'] ?>x early<br>
-								<?= $counts['eamt_late'] ?>x late<br>
+								<?= $counts['tlt_early'] ?>x early<br>
+								<?= $counts['tlt_late'] ?>x late<br>
 							<td class="r">
 						</tr>
 					</tbody>
