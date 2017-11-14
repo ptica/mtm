@@ -159,6 +159,9 @@ if (0) try {
 	print($e->getMessage());
 }
 
+// pdf engine for invoices
+include_once('pdf/cakepdf.php');
+
 // load payment gateway settings
 Configure::load('gp/gp_merchant');
 

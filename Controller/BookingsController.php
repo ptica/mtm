@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
+App::uses('CakePdf', 'CakePdf.Pdf');
 
 class BookingsController extends AppController {
 	public $layout = 'BootstrapCake.bootstrap';
@@ -16,7 +17,7 @@ class BookingsController extends AppController {
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'edit');
+		$this->Auth->allow('add', 'edit', 'invoice');
 	}
 
 	public function add() {
@@ -313,5 +314,26 @@ class BookingsController extends AppController {
 		$Email->to($to);
 		$Email->subject($subject);
 		$Email->send($content);
+	}
+
+	public function invoice() {
+		$payment_id = 379;
+		$this->loadModel('Payment.Payment');
+		$this->Payment->recursive = 2;
+		$payment = $this->Payment->findById($payment_id);
+		$viewVars = $payment;
+		$reg_type = $payment['Booking']['RegType'][0]['key'];
+		$viewVars['reg_type'] = $reg_type;
+
+		$this->set_request_scheme();
+		$host = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+		$token = $payment['Payment']['token'];
+
+		$CakePdf = new CakePdf();
+		$CakePdf->template('receipt', 'default');
+		$CakePdf->viewVars($viewVars);
+		$receipt = 'receipt-'.$payment['Booking']['id'].'.pdf';
+		$pdf = $CakePdf->write(APP . 'files' . DS . $receipt);
+		$this->render('../Pdf/receipt');
 	}
 }

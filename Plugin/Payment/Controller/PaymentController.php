@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
+App::uses('CakePdf', 'CakePdf.Pdf');
 
 class PaymentController extends PaymentAppController {
 	public $components = array('Paginator', 'Session', 'Auth');
@@ -233,12 +234,25 @@ class PaymentController extends PaymentAppController {
 		$token = $payment['Payment']['token'];
 		//$viewVars['view_on_server_url'] = "$host/payment/ok?Ref=$payment_id&token=$token";
 		$viewVars['logo'] = 'cid:logo'; // reference to attached logo
+		$reg_type = $payment['Booking']['RegType'][0]['key'];
+		$viewVars['reg_type'] = $reg_type;
+
+		// pdf invoice
+		$CakePdf = new CakePdf();
+		$CakePdf->template('receipt', 'default');
+		$CakePdf->viewVars($viewVars);
+		$receipt = 'receipt-'.$payment['Booking']['id'].'.pdf';
+		$pdf = $CakePdf->write(APP . 'files' . DS . $receipt);
 
 		$attachments = array(
 			'logo.png' => array(
 				'file' => WWW_ROOT . '/images/logo.png',
 				'mimetype' => 'image/png',
 				'contentId' => 'logo'
+			),
+			'receipt.pdf' => array(
+				'file' => APP . 'files' . DS . $receipt,
+				'mimetype' => 'application/pdf'
 			)
 		);
 

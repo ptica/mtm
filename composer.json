@@ -27,7 +27,9 @@
         "ceeram/clear_cache": "~1.1",
         "webtechnick/configuration": "dev-bootstrap_theme",
         "cakephp/debug_kit": "2.2.5",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+        "dompdf/dompdf": "^0.8.1",
+        "friendsofcake/cakepdf": "1.0.3"
     },
     "config": {
         "vendor-dir": "Vendor/"
