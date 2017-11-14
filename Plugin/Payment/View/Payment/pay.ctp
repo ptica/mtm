@@ -134,7 +134,7 @@
 						<label for="QueryQuery" class="col-sm-2 control-label"></label>
 						<div class="col-sm-8 input-group">
 						<p class="form-control-static">
-							If you need to modify paid parts of the registration or cancel your booking altogether, please contact Katerina Bryanova (<a href="mailto:bryanova@ufal.mff.cuni.cz">bryanova@ufal.mff.cuni.cz</a>).
+							If you need to modify paid parts of the registration or cancel your booking altogether, please contact Zdenka Uresova (<a href="mailto:uresova@ufal.mff.cuni.cz">uresova@ufal.mff.cuni.cz</a>).
 						</p>
 						<!--p class="form-control-static">
 							If you need to modify paid parts of the registration or cancel your booking altogether, please contact Anna Kotesovcova (<a href="mailto:kotesovcova@ufal.mff.cuni.cz">kotesovcova@ufal.mff.cuni.cz</a>).<br>
