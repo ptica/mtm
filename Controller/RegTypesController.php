@@ -33,7 +33,7 @@ class RegTypesController extends AppController {
 		if (!$this->RegType->exists($id)) {
 			throw new NotFoundException(__('Invalid reg item'));
 		}
-		$options = array('conditions' => array('regType.' . $this->RegType->primaryKey => $id));
+		$options = array('conditions' => array('RegType.' . $this->RegType->primaryKey => $id));
 		$this->set('regType', $this->RegType->find('first', $options));
 	}
 
@@ -61,7 +61,7 @@ class RegTypesController extends AppController {
 				$this->Session->setFlash(__('The reg item could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
-			$options = array('conditions' => array('regType.' . $this->RegType->primaryKey => $id));
+			$options = array('conditions' => array('RegType.' . $this->RegType->primaryKey => $id));
 			$this->request->data = $this->RegType->find('first', $options);
 		}
 	}
