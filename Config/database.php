@@ -59,7 +59,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'tlt',
+		'database' => 'mtm2018',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);

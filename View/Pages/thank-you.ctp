@@ -11,5 +11,5 @@
 </p>
 
 <p>
-    Take care, the TLT 16 2017 team.
+    Take care, the MTM 2018 team.
 </p>

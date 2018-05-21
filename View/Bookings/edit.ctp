@@ -146,7 +146,7 @@
 
 				<?php if (!empty($booking['Query'])) { ?>
 					<div class="form-group">
-						<?php echo $this->Form->input('Query', array('label'=>'TLT 16 Content', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Queries')));?>
+						<?php echo $this->Form->input('Query', array('label'=>'MTM 18 Content', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Queries')));?>
 					</div>
 				<?php } ?>
 

@@ -81,7 +81,7 @@
 					<?php echo $this->Form->input('Upsell', array('class'=>'form-control', 'placeholder'=>__('Created')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('Query', array('multiple'=>'checkbox', 'label'=> 'TLT 16 Content', 'class'=>'form-control', 'placeholder'=>__('Created')));?>
+					<?php echo $this->Form->input('Query', array('multiple'=>'checkbox', 'label'=> 'MTM 18 Content', 'class'=>'form-control', 'placeholder'=>__('Created')));?>
 				</div>
 				<div class="form-group">
 					<?php echo $this->Form->input('Meal', array('multiple'=>'checkbox', 'label'=>'Meals','class'=>'form-control', 'placeholder'=>__('Created')));?>

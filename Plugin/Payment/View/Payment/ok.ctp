@@ -21,6 +21,6 @@
 	</p>
 
 	<p>
-	    Take care, the TLT 16 team.
+	    Take care, the MTM 18 team.
 	</p>
 </div>

@@ -30,13 +30,13 @@ class PaymentController extends PaymentAppController {
 		}
 
 		if (false) {
-			echo "<p>Thank you for registering for TLT 16.<p>Online payments period has already ended.<p>We are looking forward to seeing you here in Prague.";
+			echo "<p>Thank you for registering for MTM 18.<p>Online payments period has already ended.<p>We are looking forward to seeing you here in Prague.";
 			exit();
 		}
 
 		// check for zero payment
 		if ($booking['Booking']['web_price'] <= 0) {
-			echo "<p>Thank you for registering for TLT 16.<p>There is no balance to be paid for your registration.<p>Looking forward to seeing you in Prague.";
+			echo "<p>Thank you for registering for MTM 18.<p>There is no balance to be paid for your registration.<p>Looking forward to seeing you in Prague.";
 			exit();
 		}
 
@@ -256,7 +256,7 @@ class PaymentController extends PaymentAppController {
 			)
 		);
 
-		$subject = 'Your TLT 16 receipt';
+		$subject = 'Your MTM 18 receipt';
 		$to = $payment['Booking']['email'];
 
 		$Email = new CakeEmail('default');

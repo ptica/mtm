@@ -91,6 +91,6 @@ class V4 {
 if (php_sapi_name() == 'cli') {
     $v4 = new V4();
     $spreadsheetId = '1D2OpAdVu01xhcbVqQv3N9YVg4FpSAPbIw5_igi-JsBQ';
-    echo $v4->saveData(APP . 'Config/price-tlt.json', $spreadsheetId, $range = 'TLT!A2:D');
+    echo $v4->saveData(APP . 'Config/price-mtm.json', $spreadsheetId, $range = 'MTM!A2:D');
     echo $v4->saveData(APP . 'Config/price-workshop.json', $spreadsheetId, $range = 'Workshop!A2:C');
 }

@@ -96,13 +96,13 @@ var Booking = React.createClass({
 		}
 
 		var prices = {
-			tlt: 0,
+			mtm: 0,
 			workshop: 0
 		};
 		var price_workshop = 0;
 		var price_defs = this.state.reg_type_prices;
 		var keys = {
-			tlt: Object.keys(this.state.selected_reg_types).sort().join('-'),
+			mtm: Object.keys(this.state.selected_reg_types).sort().join('-'),
 			workshop: this.state.selected_reg_types['student'] ? 'student' : ''
 		};
 		for (var item in this.state.selected_reg_items) {
@@ -340,13 +340,13 @@ var Booking = React.createClass({
 						<div className="form-group">
 							<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
 							<div className="col-sm-8 input-group">
-								<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of TLT you plan to attend:</p>
+								<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of MTM you plan to attend:</p>
 							</div>
 						</div>
 					}
 					{queries.length > 0 &&
 						<div className="form-group">
-							<label htmlFor="QueryQuery" className="col-sm-2 control-label">TLT Content</label>
+							<label htmlFor="QueryQuery" className="col-sm-2 control-label">MTM Content</label>
 							<div className="col-sm-8 input-group">
 								<input type="hidden" name="data[Query][Query]" defaultValue id="QueryQuery" />
 								{queries}
@@ -404,7 +404,7 @@ for your printed receipt
 							<label htmlFor="BookingStart" className="col-sm-2 control-label">Arrival</label>
 							<div className="col-sm-8 input-group">
 								<div className="input-group">
-									<input ref="start" onChange={this.countNights} data-date-max-date="2017-05-31" data-date-min-date="2017-05-20" defaultValue="29.5.2017" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
+									<input ref="start" onChange={this.countNights} data-date-max-date="2018-09-08" data-date-min-date="2018-09-03" defaultValue="3.9.2018" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
 									<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 								</div>
 							</div>
@@ -416,7 +416,7 @@ for your printed receipt
 							<label htmlFor="BookingEnd" className="col-sm-2 control-label">Departure</label>
 							<div className="col-sm-8 input-group">
 								<div className="input-group">
-									<input ref="end" onChange={this.countNights} data-date-max-date="2017-05-31" data-date-min-date="2017-05-20" defaultValue="31.5.2017" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
+									<input ref="end" onChange={this.countNights} data-date-max-date="2018-09-08" data-date-min-date="2018-09-03" defaultValue="8.9.2018" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
 									<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 								</div>
 							</div>
@@ -496,7 +496,7 @@ for your printed receipt
 						<div className="form-group">
 							<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
 							<div className="col-sm-8 input-group">
-								<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following TLT days (Sept 12-Sept 17).</p>
+								<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following MTM days (Sept 12-Sept 17).</p>
 								<p className="form-control-static">The price is per lunch (includes soup, main dish, dessert and drink).</p>
 								<p className="form-control-static">Participants with these pre-paid lunches will have dedicated tables in the restaurant in the basement. You might be able to get a place (and meal, of course) without this booking, in which case you will be selecting from a daily menu and most importantly, you will have to sit at different tables.</p>
 							</div>

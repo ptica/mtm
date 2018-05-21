@@ -12,7 +12,7 @@
 			<th width="100%" colspan="2"><h2>RECEIPT</h2></th>
 		</tr>
 		<tr>
-			<th colspan="2"><h3>16th International Workshop on Treebanks and Linguistic Theories</h3></th>
+			<th colspan="2"><h3>Thirteenth MT Marathon 2018</h3></th>
 		</tr>
 	    <tr>
 	        <td colspan="2">
@@ -60,5 +60,5 @@
 
 
 	<p>Thank you for your payment.</p>
-	<p>The TLT 16 team.</p>
+	<p>The MTM 18 team.</p>
 </div>

@@ -296,19 +296,19 @@ class BookingsController extends AppController {
 		$this->set_request_scheme();
 		$token = $booking['Booking']['token'];
 		$name = $booking['Booking']['name'];
-		$subject = 'TLT 16 Registration Payment';
+		$subject = 'MTM 18 Registration Payment';
 		$to = $booking['Booking']['email'];
 		$to = array($to);
 
 		$content = array();
 		$content[] = "Dear $name.";
 		$content[] = '';
-		$content[] = 'Thank you for registering at TLT 16. To confirm your booking, you need to make the payment *before December 31*.';
+		$content[] = 'Thank you for registering at MTM 18. To confirm your booking, you need to make the payment *before July 31*.';
 		$content[] = '';
 		$content[] = 'Please review your registration details and proceed to the payment at ';
 		$content[] = Router::url("/pay/$booking_id/$token", $absolute=true);
 		$content[] = '';
-		$content[] = 'Take care, the TLT 16 team.';
+		$content[] = 'Take care, the MTM 18 team.';
 
 		$Email = new CakeEmail('default');
 		$Email->to($to);

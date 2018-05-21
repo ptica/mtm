@@ -15,7 +15,7 @@ CREATE TABLE `configurations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `configurations` (`id`, `name`, `value`) VALUES
-(1,	'late_registration_start_date',	'2017-04-29 00:00:00');
+(1,	'late_registration_start_date',	'2018-08-01 00:00:00');
 
 DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE `bookings` (
@@ -82,12 +82,12 @@ CREATE TABLE `meals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `meals` (`id`, `name`, `price`, `original_price`, `ord`) VALUES
-(1,	'Mon 7.9.',	210.12,	206.00,	0),
-(2,	'Tue 8.9.',	210.12,	206.00,	0),
-(3,	'Wed 9.9.',	210.12,	206.00,	0),
-(4,	'Thu 10.9.',	210.12,	206.00,	0),
-(5,	'Fri 11.9.',	210.12,	206.00,	0),
-(6,	'Sat 12.9.',	210.12,	206.00,	0),
+(1,	'Mon 3.9.',	210.12,	206.00,	0),
+(2,	'Tue 4.9.',	210.12,	206.00,	0),
+(3,	'Wed 5.9.',	210.12,	206.00,	0),
+(4,	'Thu 6.9.',	210.12,	206.00,	0),
+(5,	'Fri 7.9.',	210.12,	206.00,	0),
+(6,	'Sat 8.9.',	210.12,	206.00,	0),
 (7,	'I need vegetarian meals.',	0.00,	0.00,	0);
 
 DROP TABLE IF EXISTS `payments`;
@@ -154,7 +154,7 @@ CREATE TABLE `queries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `queries` (`id`, `query`, `ord`) VALUES
-(1,	' Introductory lectures to machine translation (early morning). ',	0),
+(1,	'Introductory lectures to machine translation (early morning). ',	0),
 (2,	'Research talks and open source tools presentations (late morning). ',	1),
 (3,	'Lab sessions that accompany the lectures (afternoon). ',	3),
 (4,	'Group projects for \"developers\" (all day, with a break for the talks).',	2);
@@ -291,7 +291,7 @@ CREATE TABLE `bookings_reg_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `reg_items` (`id`, `key`, `desc`, `ord`) VALUES
-(1,	'tlt',	'Main Conference (May 29-31)',	1),
+(1,	'mtm',	'Main Conference (September 3-8)',	1),
 (2,	'workshop',	'Workshop Social Media and User Generated Content Machine Translation (May 31)',	2);
 
 

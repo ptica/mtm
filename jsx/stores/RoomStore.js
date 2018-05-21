@@ -9,8 +9,8 @@ var _rooms = [];
 var _rooms_by_id = {null: {Room: {id:null}, Price: 0, Location: {id:null}}};
 var _selected_room_id = null;
 var _selected_beds = 1;
-var _start = moment('29.5.2017', 'D.M.YYYY');
-var _end   = moment('31.6.2017', 'D.M.YYYY');
+var _start = moment('3.9.2018', 'D.M.YYYY');
+var _end   = moment('8.9.2018', 'D.M.YYYY');
 var _upsells_by_location = {};
 var _upsells_by_id = {};
 var _selected_upsells = {};
@@ -21,12 +21,12 @@ var _selected_queries = {};
 var _reg_types = {};
 var _reg_items = {};
 var _reg_prices = {
-	tlt: {},
+	mtm: {},
 	workshop: {}
 };
 var _selected_reg_types = {};
 var _selected_reg_items = {
-	'tlt': 'tlt',
+	'mtm': 'mtm',
 	'workshop': 'workshop'
 };
 var _late_reg_start = moment('1.1.1970', 'D.M.YYYY');
