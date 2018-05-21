@@ -28,6 +28,9 @@
 					<?php echo $this->Form->input('desc', array('data-provide'=>'wysiwyg', 'class'=>'form-control', 'placeholder'=>__('Desc')));?>
 				</div>
 				<div class="form-group">
+					<?php echo $this->Form->input('enabled', array('class'=>'form-control', 'placeholder'=>__('Enabled')));?>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
 						<?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-primary')); ?>
 					</div>

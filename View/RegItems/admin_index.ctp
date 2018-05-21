@@ -22,6 +22,7 @@
 					<tr>
 						<th><?php echo $this->Paginator->sort('key'); ?></th>
 						<th><?php echo $this->Paginator->sort('desc'); ?></th>
+						<th><?php echo $this->Paginator->sort('enabled'); ?></th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -30,6 +31,7 @@
 					<tr>
 						<td><?php echo h($regItem['RegItem']['key']); ?></td>
 						<td><?php echo h($regItem['RegItem']['desc']); ?></td>
+						<td><?php echo h($regItem['RegItem']['enabled']); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $regItem['RegItem']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $regItem['RegItem']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $regItem['RegItem']['key'])); ?>
