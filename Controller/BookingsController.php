@@ -38,8 +38,14 @@ class BookingsController extends AppController {
 						array('Room.id' => $room_id)
 					);
 				}
+				
+				if ($this->request->data['Booking']['web_price'] == '0.00') {
+					$this->zero_receipt($booking_id);
+				} else {
+					$this->email_add_notice();
+				}
+				
 				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));
-				$this->email_add_notice();
 
 				return $this->redirect("/pay/$booking_id/$token");
 				//return $this->redirect('/thank-you');
@@ -222,7 +228,7 @@ class BookingsController extends AppController {
 		$content = array();
 		$content[] = 'Your registration details were saved!';
 		$content[] = '';
-		$content[] = 'You may review your registration details or find the payment link at:';
+		$content[] = 'You may review your registration details and find the payment link at:';
 		$content[] = Router::url('/edit/' . $this->Booking->field('token'), true);
 		$owner_mail = $this->Booking->field('email');
 		$to = array($owner_mail);
@@ -317,23 +323,69 @@ class BookingsController extends AppController {
 	}
 
 	public function invoice() {
-		$payment_id = 379;
+		$payment_id = 1049;
 		$this->loadModel('Payment.Payment');
 		$this->Payment->recursive = 2;
 		$payment = $this->Payment->findById($payment_id);
 		$viewVars = $payment;
-		$reg_type = $payment['Booking']['RegType'][0]['key'];
+		$reg_type = @$payment['Booking']['RegType'][0]['key'];
 		$viewVars['reg_type'] = $reg_type;
 
 		$this->set_request_scheme();
 		$host = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
 		$token = $payment['Payment']['token'];
 
-		$CakePdf = new CakePdf();
+		$CakePdf = new CakePdf(Configure::read('CakePdfDomPdf'));
 		$CakePdf->template('receipt', 'default');
 		$CakePdf->viewVars($viewVars);
 		$receipt = 'receipt-'.$payment['Booking']['id'].'.pdf';
 		$pdf = $CakePdf->write(APP . 'files' . DS . $receipt);
 		$this->render('../Pdf/receipt');
+	}
+	
+	public function zero_receipt($booking_id) {
+		$this->Booking->recursive = 2;
+		$booking = $this->Booking->findById($booking_id);
+		$viewVars = $booking;
+		//$reg_type = $booking['Booking']['RegType'][0]['key'];
+		$viewVars['reg_type'] = '';
+		$viewVars['Booking']['RegItem'] = $booking['RegItem'];
+
+		$this->set_request_scheme();
+		$host = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+
+		$CakePdf = new CakePdf(Configure::read('CakePdfDomPdf'));
+		$CakePdf->template('zero_receipt', 'default');
+		$CakePdf->viewVars($viewVars);
+		$receipt = 'receipt-'.$booking['Booking']['id'].'.pdf';
+		$pdf = $CakePdf->write(APP . 'files' . DS . $receipt);
+		$this->set($viewVars);
+		
+		$attachments = array(
+			'logo.png' => array(
+				'file' => WWW_ROOT . '/images/logo.png',
+				'mimetype' => 'image/png',
+				'contentId' => 'logo'
+			),
+			'receipt.pdf' => array(
+				'file' => APP . 'files' . DS . $receipt,
+				'mimetype' => 'application/pdf'
+			)
+		);
+
+		$subject = 'Your MTM 18 registration';
+		$to = $booking['Booking']['email'];
+
+		$Email = new CakeEmail('default');
+		$Email->template('zero_receipt')
+			->emailFormat('html')
+			->to($to)
+			->subject($subject)
+			->viewVars($viewVars)
+			->attachments($attachments);
+		$Email->send();
+		
+		
+		//$this->render('../Pdf/zero_receipt');
 	}
 }

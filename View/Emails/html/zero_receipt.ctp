@@ -1,22 +1,18 @@
 <?php
-    $reg_types = Hash::extract($Booking['RegType'], '{n}.key');
-    $reg_type = implode(' & ', $reg_types);
-
-    $total = $Booking['web_price'];
 ?>
 
 <p>
     Dear <?= $Booking['name'] ?>.
 </p>
 
-<p>We hereby confirm your <?= $reg_type ?> registration and payment for:</p>
+<p>We hereby confirm your <?= $reg_type ?> registration to:</p>
 
 <table>
     <tr>
         <td>
             <ul>
                 <?php
-                    foreach ($Booking['RegItem'] as $item) {
+                    foreach ($RegItem as $item) {
                         echo '<li>' . $item['desc'] . '</li>';
                     }
                 ?>
@@ -26,8 +22,7 @@
     </tr>
     <tr>
         <td style="text-align:left">
-            for a total of CZK <?= $Payment['amountcents']/100 ?><br>
-            payment was accepted on <?= $Payment['created'] ?>
+            for a total of CZK 0<br>
         </td>
     </tr>
     <tr>
@@ -36,7 +31,6 @@
             <ul>
                 <li><?= $Booking['institution'] ?></li>
 				<li><?= $Booking['address'] ?></li>
-				<li><?= $Booking['vat'] ?></li>
 				<li><?= $Booking['name'] ?></li>
             </ul>
         </td>
@@ -44,7 +38,7 @@
 </table>
 
 
-<p>Thank you for your payment.</p>
+<p>Thank you for your registration.</p>
 <p>The MTM 18 team.</p>
 
 <p>
